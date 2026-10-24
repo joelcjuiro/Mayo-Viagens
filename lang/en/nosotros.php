@@ -1,0 +1,46 @@
+<?php
+
+return [
+    'eyebrow' => 'About us',
+    'title' => 'A local agency with real support',
+    'lead' => 'We are Mayo Viagens, a local agency based in Cusco. We know every route, every village and every train schedule, and we are with you from arrival to departure so all you have to do is enjoy the trip.',
+    'p2' => 'Our tours are private or in small groups, always with professional guides and personal attention.',
+    'btn_tours' => 'See our tours',
+    'btn_wa' => 'Chat on WhatsApp',
+    'wa_text' => 'Hi! I would like to know more about Mayo Viagens.',
+    'pillars' => [
+        ['t' => 'Our mission', 'd' => 'To help every traveler experience Cusco and Machu Picchu with safety, clarity and a personal touch: well-planned itineraries, professional guides and no surprise prices.'],
+        ['t' => 'Our vision', 'd' => 'To be the local agency more travelers trust to discover Peru, known for honest service, punctuality and respect for communities and nature.'],
+        ['t' => 'Our promise', 'd' => 'What we tell you before you book is what you get on the trip: clear conditions, on-time pickups and a real person who answers when you need us.'],
+    ],
+    'values_t' => 'What guides us',
+    'values_s' => 'Four principles we apply to every booking and every tour.',
+    'values' => [
+        ['t' => 'Responsibility', 'd' => 'We take care of every detail of your itinerary, from booking to return.'],
+        ['t' => 'Punctuality', 'd' => 'Transfers and tours on the agreed time, no improvising.'],
+        ['t' => 'Respect', 'd' => 'For travelers, local communities and the nature we visit.'],
+        ['t' => 'Honesty', 'd' => 'Clear prices and conditions from the very first message.'],
+    ],
+    'how_t' => 'How we work with you',
+    'how_s' => 'A simple, transparent process from your first message to your last day.',
+    'steps' => [
+        ['t' => 'Tell us what you want', 'd' => 'Message us on WhatsApp or through the form with your dates and ideas.'],
+        ['t' => 'Get a clear proposal', 'd' => 'We confirm availability, itinerary, what is and is not included, and the final price.'],
+        ['t' => 'Book with peace of mind', 'd' => 'You confirm only when everything is clear, with secure payment.'],
+        ['t' => 'Travel with support', 'd' => 'A professional guide on tour and 24-hour support throughout your trip.'],
+    ],
+    'proof_t' => 'Why trust us',
+    'proof' => [
+        'Local operator in Cusco',
+        'Professional guides',
+        'Small groups or private tours',
+        '24/7 support',
+        'Clear conditions before you confirm',
+        'Secure payments',
+    ],
+    'stat_years' => 'years of experience',
+    'stat_travelers' => 'travelers served',
+    'stat_support' => 'traveler support',
+    'cta_t' => 'Ready for your trip to Cusco?',
+    'cta_p' => 'Tell us your dates and we will reply with a clear proposal, no commitment.',
+];

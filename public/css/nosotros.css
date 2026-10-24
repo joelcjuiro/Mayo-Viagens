@@ -1,0 +1,44 @@
+.ab-hero{background:linear-gradient(120deg,#06202f,#0b2c45 55%,#0e5f7a);color:#fff;padding:4.5rem 0}
+.ab-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+.ab-eyebrow{display:flex;align-items:center;gap:.7rem;color:#6fe0c0;font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase}
+.ab-eyebrow::before{content:"";width:34px;height:2px;background:#6fe0c0}
+.ab-hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,4.8vw,3.6rem);line-height:1.08;margin:.8rem 0 1.1rem}
+.ab-lead{font-size:1.15rem;color:rgba(255,255,255,.92);max-width:36em}
+.ab-sub{margin-top:.9rem;color:rgba(255,255,255,.75);max-width:36em}
+.ab-cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.8rem}
+.ab-cta.center{justify-content:center}
+.ab-photo{aspect-ratio:4/5;border-radius:26px;background:var(--ph,none) center/cover,linear-gradient(160deg,#1aa3c4,#0b2c45);box-shadow:0 30px 60px rgba(0,0,0,.4);transition:transform .5s ease}
+.ab-photo:hover{transform:translateY(-6px) rotate(-.6deg)}
+.ab-sec{padding:4.5rem 0}.ab-alt{background:var(--sand)}
+.ab-head{text-align:center;max-width:40rem;margin:0 auto 2.4rem}
+.ab-head h2,.ab-proof h2,.ab-final h2{font-family:var(--font-display);color:var(--navy);font-size:clamp(1.8rem,3.4vw,2.5rem);line-height:1.15}
+.ab-head p{color:var(--muted);margin-top:.6rem}
+.ab-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.ab-pillar,.ab-value{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:1.8rem;transition:transform .35s ease,box-shadow .35s ease}
+.ab-pillar:hover,.ab-value:hover,.ab-steps li:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(11,44,69,.16)}
+.ab-pillar h2{font-family:var(--font-display);color:var(--navy);font-size:1.4rem;margin:1rem 0 .5rem}
+.ab-pillar p,.ab-value p,.ab-steps p{color:var(--muted)}
+.ab-ico{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#1aa3c4,#2fae7b)}
+.ab-ico svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ab-values{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.ab-value b{font-family:var(--font-display);font-size:2rem;color:var(--gold)}
+.ab-value h3,.ab-steps h3{font-family:var(--font-display);color:var(--navy);margin:.3rem 0 .4rem}
+.ab-steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;counter-reset:s}
+.ab-steps li{position:relative;padding:1.6rem;border:1.5px solid var(--line,#e6ecf1);border-radius:22px;background:#fff;transition:transform .35s ease,box-shadow .35s ease}
+.ab-steps li span{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;margin-bottom:.8rem}
+.ab-proof{background:var(--navy);color:#fff;padding:4rem 0;text-align:center}
+.ab-proof h2{color:#fff}
+.ab-checks{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;margin:1.8rem 0}
+.ab-checks li{padding:.55rem 1.1rem;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);font-weight:700}
+.ab-checks li::before{content:"✓";color:#6fe0c0;margin-right:.5rem}
+.ab-stats{list-style:none;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+.ab-stats strong{display:block;font-family:var(--font-display);font-size:2.4rem;color:#6fe0c0}
+.ab-stats span{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.ab-final{padding:4.5rem 0;text-align:center;background:var(--sand)}
+.ab-final p{color:var(--muted);margin:.7rem 0 0}
+.ab-final .btn-glass{background:#fff;color:var(--navy);border-color:var(--navy)}
+.ab-js .ab-rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease,box-shadow .35s ease;transition-delay:calc(var(--d,0)*110ms)}
+.ab-js .ab-rv.in{opacity:1;transform:none}
+@media (max-width:960px){.ab-hero-grid,.ab-pillars{grid-template-columns:1fr}.ab-values,.ab-steps{grid-template-columns:1fr 1fr}.ab-photo{aspect-ratio:16/10}}
+@media (max-width:560px){.ab-values,.ab-steps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.ab-js .ab-rv{opacity:1;transform:none;transition:none}.ab-photo,.ab-pillar,.ab-value,.ab-steps li{transition:none}}

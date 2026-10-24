@@ -1,0 +1,46 @@
+<?php
+
+return [
+    'eyebrow' => 'Nosotros',
+    'title' => 'Agencia local, atención de verdad',
+    'lead' => 'Somos Mayo Viagens, una agencia local de Cusco. Conocemos cada ruta, cada pueblo y cada horario de tren, y te acompañamos desde tu llegada hasta tu regreso para que solo te ocupes de disfrutar.',
+    'p2' => 'Nuestros tours son privados o en grupos pequeños, siempre con guías profesionales y atención personalizada.',
+    'btn_tours' => 'Ver nuestros tours',
+    'btn_wa' => 'Hablar por WhatsApp',
+    'wa_text' => '¡Hola! Quiero conocer más sobre Mayo Viagens.',
+    'pillars' => [
+        ['t' => 'Nuestra misión', 'd' => 'Que cada viajero viva Cusco y Machu Picchu con seguridad, claridad y cercanía: itinerarios bien cuidados, guías profesionales y precios sin sorpresas.'],
+        ['t' => 'Nuestra visión', 'd' => 'Ser la agencia local en la que más viajeros confíen para conocer el Perú, reconocida por su trato honesto, su puntualidad y su respeto por las comunidades y la naturaleza.'],
+        ['t' => 'Nuestra promesa', 'd' => 'Lo que te decimos antes de reservar es lo que vives en el viaje: condiciones claras, horarios cumplidos y una persona real que responde cuando la necesitas.'],
+    ],
+    'values_t' => 'Lo que nos guía',
+    'values_s' => 'Cuatro principios que aplicamos en cada reserva y en cada tour.',
+    'values' => [
+        ['t' => 'Responsabilidad', 'd' => 'Cuidamos cada detalle de tu itinerario, de la reserva al regreso.'],
+        ['t' => 'Puntualidad', 'd' => 'Traslados y tours a la hora acordada, sin improvisar.'],
+        ['t' => 'Respeto', 'd' => 'Por los viajeros, las comunidades locales y la naturaleza que visitamos.'],
+        ['t' => 'Honestidad', 'd' => 'Precios y condiciones claros desde el primer mensaje.'],
+    ],
+    'how_t' => 'Así trabajamos contigo',
+    'how_s' => 'Un proceso simple y transparente, de tu primer mensaje al último día.',
+    'steps' => [
+        ['t' => 'Cuéntanos qué buscas', 'd' => 'Escríbenos por WhatsApp o por el formulario con tus fechas y tus ideas.'],
+        ['t' => 'Recibe una propuesta clara', 'd' => 'Te confirmamos disponibilidad, itinerario, qué incluye, qué no y el precio final.'],
+        ['t' => 'Reserva con tranquilidad', 'd' => 'Confirmas solo cuando todo está claro, con pago seguro.'],
+        ['t' => 'Viaja acompañado', 'd' => 'Guía profesional en el tour y soporte 24 horas durante todo tu viaje.'],
+    ],
+    'proof_t' => 'Por qué confiar en nosotros',
+    'proof' => [
+        'Operador local en Cusco',
+        'Guías profesionales',
+        'Grupos pequeños o tours privados',
+        'Atención 24 h, todos los días',
+        'Condiciones claras antes de confirmar',
+        'Pagos seguros',
+    ],
+    'stat_years' => 'años de experiencia',
+    'stat_travelers' => 'viajeros atendidos',
+    'stat_support' => 'atención al viajero',
+    'cta_t' => '¿Listo para tu viaje a Cusco?',
+    'cta_p' => 'Cuéntanos tus fechas y te respondemos con una propuesta clara, sin compromiso.',
+];
