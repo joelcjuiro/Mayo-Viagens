@@ -119,3 +119,37 @@ td.actions{flex-wrap:wrap}
 .op-admin-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
 .op-admin-head .stars{color:var(--gold);margin-left:auto}
 .op-admin-actions{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+
+/* ---------- Responsive del panel (celular, tablet, PC) ---------- */
+.editor{grid-template-columns:minmax(0,1fr)}
+.tab-pane,.card-f,.card-f>*,.fgrid>*,.two>*{min-width:0}
+.fgrid{grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))}
+.url-prev{overflow-wrap:anywhere}
+.range{flex-wrap:wrap}
+.f input,.f select,.f textarea{min-width:0;max-width:100%}
+.rowx{flex-wrap:nowrap}
+@media (max-width:760px){
+  input,select,textarea{font-size:16px!important}          /* evita el zoom automático en iPhone */
+  .admin-content{padding-bottom:7rem}
+  .card-f{padding:1.1rem 1rem;border-radius:18px}
+  .panel-tabs{flex-wrap:nowrap;overflow-x:auto;border-radius:16px;scrollbar-width:none;top:76px}
+  .panel-tabs::-webkit-scrollbar{display:none}
+  .panel-tabs button{flex:none;padding:.65rem 1rem}
+  .rowx{flex-wrap:wrap}
+  .rowx .w-s{flex:1 1 120px}
+  .actionbar{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;border-radius:16px;padding:.7rem}
+  .actionbar .status{grid-column:1/-1;margin:0}
+  .actionbar .btn-ghost{grid-column:1/-1;text-align:center}
+  .actionbar button{min-height:46px}
+  .step-head{flex-wrap:wrap}
+  .op-admin-actions{display:grid;grid-template-columns:1fr 1fr}
+  .sec-row{display:grid;grid-template-columns:70px 1fr}
+  .sec-row input[type=text]{grid-column:1/-1}
+  .sec-row .btn-ghost,.sec-row .link-danger{justify-self:start}
+  .list-tools{flex-direction:column;align-items:stretch}
+  .filters-row>*{flex:1 1 100%}
+  td.actions{min-width:210px}
+}
+@media (hover:none){.btn-x,.mini,.up-item .tools button{min-width:36px;min-height:36px}}
+@media (max-width:480px){.who span:last-child{display:none}.topbar h1{font-size:1.15rem}}
+.topbar{background:rgba(23,17,12,.94)!important}

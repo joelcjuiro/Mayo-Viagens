@@ -266,6 +266,7 @@
                     <blockquote class="review">
                         <p class="stars" aria-label="{{ $r['stars'] ?? 5 }} / 5">{{ str_repeat('★', (int) ($r['stars'] ?? 5)) }}</p>
                         <p class="review-text">{{ $r['text'] }}</p>
+                        @if(!empty($r['photos']))<div class="op-photos">@foreach($r['photos'] as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy" decoding="async"></a>@endforeach</div>@endif
                         <footer>
                             <strong>{{ $r['name'] }}</strong>
                             <small>{{ $r['country'] ?? '' }}@isset($r['date']) · {{ \Illuminate\Support\Carbon::parse($r['date'])->translatedFormat('M Y') }}@endisset</small>

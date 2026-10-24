@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+
+    // Traducción automática de tours (DeepL o Google). Ver CAMBIOS-TOURS.md
+    'traductor' => [
+        'provider' => env('TRADUCTOR_PROVIDER', 'deepl'),
+        'key' => env('TRADUCTOR_KEY'),
+    ],
+
 ];

@@ -26,13 +26,14 @@
                 </div>
                 @if($r->tour)<small>Tour: {{ $r->tour->nombre }}</small>@endif
                 <p>{{ $r->comentario }}</p>
+                @if($r->fotos)<div class="op-photos">@foreach($r->fotosUrls() as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy"></a>@endforeach</div>@endif
                 <label class="f">Respuesta pública de la agencia (opcional)
                     <textarea name="respuesta" rows="2" maxlength="1000">{{ $r->respuesta }}</textarea></label>
                 <div class="op-admin-actions">
                     <button class="btn-admin" name="estado" value="aprobada" type="submit">Aprobar y publicar</button>
                     <button class="btn-ghost" name="estado" value="rechazada" type="submit">Rechazar</button>
                     <button class="btn-ghost" name="estado" value="pendiente" type="submit">Dejar pendiente</button>
-                    <button class="link-danger" type="submit" form="del-op-{{ $r->id }}" onclick="return confirm('¿Eliminar esta opinión?')">Eliminar</button>
+                    @if(auth()->user()->esAdmin())<button class="link-danger" type="submit" form="del-op-{{ $r->id }}" onclick="return confirm('¿Eliminar esta opinión?')">Eliminar</button>@endif
                 </div>
             </form>
             <form id="del-op-{{ $r->id }}" method="POST" action="{{ route('admin.resenas.delete', $r->id) }}" hidden>@csrf @method('DELETE')</form>

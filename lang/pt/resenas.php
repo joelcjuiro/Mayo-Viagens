@@ -31,4 +31,6 @@ return [
     'tour_none' => 'Este passeio ainda não tem avaliações.',
     'stars_of' => 'de 5',
     'hp' => 'Avaliações',
+    'photos' => 'Fotos da sua viagem (opcional)',
+    'photos_hint' => 'Até 3 fotos JPG, PNG ou WebP. Se passarem de 300 KB, reduzimos automaticamente.',
 ];

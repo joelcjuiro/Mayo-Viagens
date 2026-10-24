@@ -237,6 +237,80 @@
     vid.addEventListener('blur', pintarVideo);
     pintarVideo();
 
+
+/* ---------------- Traducción automática ---------------- */
+(function () {
+    var box = document.getElementById('autoTrad');
+    if (!box) { return; }
+    var btn = document.getElementById('trBtn'), msg = document.getElementById('trMsg');
+    var token = (form.querySelector('input[name=_token]') || {}).value || '';
+    function say(t, bad) { msg.textContent = t || ''; msg.className = 'up-msg' + (bad ? ' err' : ' ok'); }
+    function val(sel) { var e = form.querySelector(sel); return e ? e.value.trim() : ''; }
+    function byName(n) { return form.querySelector('[name="' + n + '"]'); }
+
+    function reunir() {
+        var items = [];
+        function add(id, t) { if (t && t.trim()) { items.push({ id: id, text: t.trim() }); } }
+        add('nombre', val('[name=nombre]'));
+        add('duracion', val('[name=duracion]'));
+        add('descripcion', val('[name=descripcion]'));
+        $$('[name="incluye_items[]"]', form).forEach(function (e, i) { add('inc:' + i, e.value); });
+        $$('[name="no_incluye_items[]"]', form).forEach(function (e, i) { add('noinc:' + i, e.value); });
+        $$('#pane-itinerario .step', form).forEach(function (row) {
+            var t = $('input[name$="[titulo]"]', row); if (!t) { return; }
+            var m = t.name.match(/^itinerario\[(.+?)\]\[titulo\]$/); if (!m) { return; }
+            add('paso:' + m[1] + ':titulo', t.value);
+            var d = $('textarea[name$="[descripcion]"]', row); if (d) { add('paso:' + m[1] + ':descripcion', d.value); }
+        });
+        $$('#pane-precio .price-row', form).forEach(function (row) {
+            var e = $('input[name$="[etiqueta]"]', row); if (!e) { return; }
+            var m = e.name.match(/^precios\[(.+?)\]\[etiqueta\]$/); if (!m) { return; }
+            add('precio:' + m[1] + ':etiqueta', e.value);
+            var d = $('textarea[name$="[descripcion]"]', row); if (d) { add('precio:' + m[1] + ':descripcion', d.value); }
+        });
+        return items;
+    }
+
+    btn.addEventListener('click', function () {
+        var items = reunir();
+        if (!items.length) { say('Primero escribe el nombre o la descripción del tour.', true); return; }
+        var source = document.getElementById('trSource').value;
+        var over = document.getElementById('trOver').checked;
+        btn.disabled = true; say('Traduciendo ' + items.length + ' textos…');
+
+        fetch(box.dataset.url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token, 'X-Requested-With': 'XMLHttpRequest' },
+            body: JSON.stringify({ source: source, items: items })
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+            if (!res.ok || !res.j.ok) { throw new Error((res.j && (res.j.message || (res.j.errors && Object.values(res.j.errors)[0][0]))) || 'No se pudo traducir.'); }
+            var tr = res.j.traducciones, n = 0;
+            function poner(name, value) {
+                var e = byName(name);
+                if (e && value && (over || !e.value.trim())) { e.value = value; n++; }
+            }
+            ['pt', 'es', 'en'].forEach(function (l) {
+                if (l === source) { return; }
+                ['nombre', 'duracion', 'descripcion'].forEach(function (c) { if (tr[c] && tr[c][l]) { poner('traducciones[' + l + '][' + c + ']', tr[c][l]); } });
+                ['inc', 'noinc'].forEach(function (p) {
+                    var lineas = [], i = 0;
+                    while (tr[p + ':' + i]) { lineas.push(tr[p + ':' + i][l] || ''); i++; }
+                    if (lineas.length) { poner('traducciones[' + l + '][' + (p === 'inc' ? 'incluye' : 'no_incluye') + ']', lineas.join('\n')); }
+                });
+                Object.keys(tr).forEach(function (id) {
+                    var m = id.match(/^(paso|precio):(.+):(titulo|descripcion|etiqueta)$/); if (!m || !tr[id][l]) { return; }
+                    var grupo = m[1] === 'paso' ? 'itinerario' : 'precios';
+                    poner(grupo + '[' + m[2] + '][tr][' + l + '][' + m[3] + ']', tr[id][l]);
+                });
+            });
+            say('Listo: se llenaron ' + n + ' campos. Revísalos y guarda el tour.');
+            form.dispatchEvent(new Event('input', { bubbles: true }));
+        }).catch(function (e) { say(e.message, true); })
+        .then(function () { btn.disabled = false; });
+    });
+})();
+
     /* ---------------- Puntos de avance por panel ---------------- */
     function marcar(name, ok) { var d = $('[data-dot="' + name + '"]'); if (d && d.className.indexOf('err') === -1) { d.className = 'dot-s' + (ok ? ' ok' : ''); } }
     function avance() {

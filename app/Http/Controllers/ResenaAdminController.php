@@ -37,7 +37,13 @@ class ResenaAdminController extends Controller
 
     public function destroy(string $id)
     {
-        Resena::findOrFail($id)->delete();
+        $r = Resena::findOrFail($id);
+        foreach ((array) $r->fotos as $ruta) {
+            if (str_starts_with((string) $ruta, 'uploads/opiniones/') && ! str_contains($ruta, '..')) {
+                \Illuminate\Support\Facades\File::delete(public_path($ruta));
+            }
+        }
+        $r->delete();
 
         return back()->with('success', 'Opinión eliminada.');
     }

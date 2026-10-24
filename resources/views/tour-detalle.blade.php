@@ -121,6 +121,7 @@
                             <div><strong>{{ $o->nombre }}</strong><small>{{ $o->pais }}</small></div>
                             <span class="stars">{{ str_repeat('★', $o->calificacion) }}</span></header>
                         <p>{{ $o->comentario }}</p>
+                        @if($o->fotos)<div class="op-photos">@foreach($o->fotosUrls() as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy" decoding="async"></a>@endforeach</div>@endif
                     </article>
                 @empty
                     <p class="meta">{{ __('resenas.tour_none') }}</p>

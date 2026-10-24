@@ -552,7 +552,7 @@ class TourAdminController extends Controller
     private function traducciones(Request $request, Tour $tour): ?array
     {
         $actual = $tour->traducciones ?: [];
-        foreach (['es', 'en'] as $lang) {
+        foreach (['pt', 'es', 'en'] as $lang) {
             foreach (['nombre', 'descripcion', 'duracion', 'incluye', 'no_incluye'] as $campo) {
                 if ($request->has("traducciones.$lang.$campo")) {
                     $valor = trim((string) $request->input("traducciones.$lang.$campo"));

@@ -31,4 +31,6 @@ return [
     'tour_none' => 'This tour has no reviews yet.',
     'stars_of' => 'out of 5',
     'hp' => 'Reviews',
+    'photos' => 'Photos of your trip (optional)',
+    'photos_hint' => 'Up to 3 JPG, PNG or WebP photos. If they are over 300 KB we shrink them automatically.',
 ];

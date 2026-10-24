@@ -399,3 +399,55 @@ a.cc:hover{border-color:var(--gold)}
 .op-invite{display:flex;justify-content:space-between;align-items:center;gap:1.2rem;flex-wrap:wrap;background:var(--sand);border:1px solid var(--line);border-radius:22px;padding:1.4rem 1.8rem;margin-top:2rem}
 .op-invite p{margin:0;max-width:60ch;color:var(--ink)}
 .op-invite>div{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+
+/* Fotos en opiniones */
+.op-photos{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem}
+.op-photos img{width:96px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--line);transition:transform .2s}
+.op-photos a:hover img{transform:scale(1.04)}
+.op-thumbs{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}
+.op-thumb{position:relative;width:96px;height:72px;border-radius:10px;overflow:hidden;background:#eee}
+.op-thumb img{width:100%;height:100%;object-fit:cover}
+.op-thumb button{position:absolute;right:3px;top:3px;width:24px;height:24px;border:0;border-radius:50%;background:rgba(255,255,255,.92);font-weight:800;cursor:pointer}
+.op-thumb span{position:absolute;left:3px;bottom:3px;background:rgba(11,8,6,.8);color:#fff;font-size:.65rem;padding:.05rem .4rem;border-radius:99px}
+.field input[type=file]{padding:.6rem;border:1.5px dashed #d9cfbf;border-radius:12px;background:#fff;width:100%}
+
+/* ---------- Celular, tablet y pantallas táctiles ---------- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,summary{-webkit-tap-highlight-color:transparent}
+@media (max-width:760px){
+  input,select,textarea{font-size:16px!important}          /* evita el zoom automático en iPhone */
+  .btn,.nav-btn,.round-btn,.link-arrow{min-height:44px}
+  .sec{padding:3.2rem 0}
+  .sec-head h2{font-size:clamp(1.6rem,7vw,2.1rem)}
+  .head-tools .round-btn{width:44px;height:44px}
+  .hero2{padding-top:7rem}
+  .hero2-cta{flex-direction:column;align-items:stretch}
+  .hero2-cta .btn{justify-content:center;width:100%}
+  .tour-actions{grid-template-columns:1fr}
+  .numbers-grid li{min-width:calc(50% - .6rem);padding:1rem}
+  .op-card header{flex-wrap:wrap}
+  .legal-card{padding:1.2rem}
+  .legal-body h2{font-size:1.15rem}
+}
+@media (min-width:761px) and (max-width:1100px){
+  .tour-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* En pantallas táctiles no se queda "pegado" el efecto hover */
+@media (hover:none){
+  .tour-card:hover,.why-card:hover,.hero2-card:hover{transform:none}
+  .tour-card:hover::after{opacity:0}
+  .tour-card:hover .tour-media img,.cat-card:hover img,.dest-card:hover img{transform:none}
+}
+/* iPhone con notch: respeta las zonas seguras */
+.wa-float{bottom:calc(1.1rem + env(safe-area-inset-bottom,0px));right:calc(1.1rem + env(safe-area-inset-right,0px))}
+.site-header{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+/* Pantallas muy anchas */
+@media (min-width:1800px){.container{max-width:1360px}}
+/* Teléfono en horizontal (poca altura) */
+@media (max-height:520px) and (orientation:landscape){.hero2{min-height:0;padding-top:6rem;padding-bottom:3rem}}
+.op-grid>*{min-width:0}
+.op-card p,.review-text{overflow-wrap:anywhere}
+@media (max-width:900px){.op-grid{grid-template-columns:minmax(0,1fr)}}

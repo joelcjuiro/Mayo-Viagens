@@ -19,7 +19,7 @@
     </label>
     <details class="trad">
         <summary>Traducciones de este paso (opcional)</summary>
-        @foreach(['es' => 'Español', 'en' => 'English'] as $l => $ln)
+        @foreach(['pt' => 'Português', 'es' => 'Español', 'en' => 'English'] as $l => $ln)
             <label class="f">Título · {{ $ln }}
                 <input type="text" name="itinerario[{{ $i }}][tr][{{ $l }}][titulo]" value="{{ $p['tr'][$l]['titulo'] ?? '' }}" maxlength="150">
             </label>

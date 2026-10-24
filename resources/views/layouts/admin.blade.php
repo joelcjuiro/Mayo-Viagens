@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>@yield('title', 'Panel') | Mayo Viagens</title>
     <meta name="robots" content="noindex,nofollow">
     <script>document.documentElement.classList.add('js')</script>
@@ -22,6 +22,10 @@
                 <svg viewBox="0 0 24 24"><path d="m3 20 6-11 4 6 3-4 5 9H3Z"/></svg>Tours</a>
             <a href="{{ route('admin.secciones') }}" @class(['on' => request()->routeIs('admin.secciones*')])>
                 <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h16"/><circle cx="18" cy="12" r="2"/></svg>Secciones del inicio</a>
+            @if(auth()->user()->esAdmin())
+            <a href="{{ route('admin.usuarios') }}" @class(['on' => request()->routeIs('admin.usuarios*')])>
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M17 11.5a3 3 0 1 0 0-6M18.5 14.5c2 .6 3 2.3 3 5"/></svg>Usuarios</a>
+            @endif
             <a href="{{ route('admin.resenas') }}" @class(['on' => request()->routeIs('admin.resenas*')])>
                 <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3Z"/></svg>Opiniones
                 @php $opPend = rescue(fn () => \App\Models\Resena::where('estado', 'pendiente')->count(), 0, false); @endphp

@@ -12,7 +12,7 @@
     <details class="trad" style="grid-column:1/-1">
         <summary>Traducciones de este precio (opcional)</summary>
         <div class="fgrid">
-        @foreach(['es' => 'Español', 'en' => 'English'] as $l => $ln)
+        @foreach(['pt' => 'Português', 'es' => 'Español', 'en' => 'English'] as $l => $ln)
             <label class="f">Nombre · {{ $ln }}
                 <input type="text" name="precios[{{ $i }}][tr][{{ $l }}][etiqueta]" value="{{ $p['tr'][$l]['etiqueta'] ?? '' }}" maxlength="120">
             </label>

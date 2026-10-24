@@ -11,6 +11,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TourAdminController;
 use App\Http\Controllers\SeccionAdminController;
 use App\Http\Controllers\ReclamoController;
+use App\Http\Controllers\TraduccionController;
+use App\Http\Controllers\UsuarioAdminController;
 use App\Http\Controllers\ResenaController;
 use App\Http\Controllers\ResenaAdminController;
 use App\Http\Controllers\ReclamoAdminController;
@@ -59,11 +61,23 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+
+    // Solo administradores: borrar contenido y gestionar usuarios
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/usuarios', [UsuarioAdminController::class, 'index'])->name('usuarios');
+        Route::post('/usuarios', [UsuarioAdminController::class, 'store'])->name('usuarios.store');
+        Route::put('/usuarios/{id}', [UsuarioAdminController::class, 'update'])->name('usuarios.update');
+        Route::delete('/usuarios/{id}', [UsuarioAdminController::class, 'destroy'])->name('usuarios.delete');
+        Route::delete('/tours/{id}', [TourAdminController::class, 'destroy'])->name('tours.delete');
+        Route::delete('/secciones/{id}', [SeccionAdminController::class, 'destroy'])->name('secciones.delete');
+        Route::delete('/resenas/{id}', [ResenaAdminController::class, 'destroy'])->name('resenas.delete');
+    });
 
     // Tours (el orden importa: 'crear' antes de '{id}')
     Route::get('/tours', [TourAdminController::class, 'index'])->name('tours');
+    Route::post('/tours/traducir', [TraduccionController::class, 'traducir'])->name('tours.traducir');
     Route::get('/tours/crear', [TourAdminController::class, 'create'])->name('tours.create');
     Route::post('/tours', [TourAdminController::class, 'store'])->name('tours.store');
     Route::get('/tours/{id}/editar', [TourAdminController::class, 'edit'])->name('tours.edit');
@@ -71,17 +85,14 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::put('/tours/{id}', [TourAdminController::class, 'update'])->name('tours.update');
     Route::patch('/tours/{id}/estado', [TourAdminController::class, 'estado'])->name('tours.estado');
     Route::post('/tours/{id}/duplicar', [TourAdminController::class, 'duplicar'])->name('tours.duplicar');
-    Route::delete('/tours/{id}', [TourAdminController::class, 'destroy'])->name('tours.delete');
 
     // Secciones del inicio
     Route::get('/secciones', [SeccionAdminController::class, 'index'])->name('secciones');
     Route::post('/secciones', [SeccionAdminController::class, 'store'])->name('secciones.store');
     Route::put('/secciones/{id}', [SeccionAdminController::class, 'update'])->name('secciones.update');
-    Route::delete('/secciones/{id}', [SeccionAdminController::class, 'destroy'])->name('secciones.delete');
 
     Route::get('/resenas', [ResenaAdminController::class, 'index'])->name('resenas');
     Route::patch('/resenas/{id}', [ResenaAdminController::class, 'update'])->name('resenas.update');
-    Route::delete('/resenas/{id}', [ResenaAdminController::class, 'destroy'])->name('resenas.delete');
 
     Route::get('/reclamos', [ReclamoAdminController::class, 'index'])->name('reclamos');
     Route::get('/reclamos/{id}', [ReclamoAdminController::class, 'show'])->name('reclamos.show');

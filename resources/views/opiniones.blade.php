@@ -45,6 +45,7 @@
                                 </header>
                                 @if($r->tour)<p class="op-tour">{{ __('resenas.on_tour') }} <a href="{{ route('tour.detalle', $r->tour->slug) }}">{{ $r->tour->nombre }}</a></p>@endif
                                 <p>{{ $r->comentario }}</p>
+                                @if($r->fotos)<div class="op-photos">@foreach($r->fotosUrls() as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy" decoding="async"></a>@endforeach</div>@endif
                                 @if($r->respuesta)<blockquote class="op-reply"><strong>{{ __('resenas.reply') }}</strong><br>{{ $r->respuesta }}</blockquote>@endif
                             </article>
                         @endforeach
@@ -55,7 +56,7 @@
                 @endif
             </div>
 
-            <form method="POST" action="{{ route('opiniones.store') }}" class="card-form op-form" id="opinar" novalidate>
+            <form method="POST" action="{{ route('opiniones.store') }}" class="card-form op-form" id="opinar" enctype="multipart/form-data" novalidate>
                 @csrf
                 <input type="text" name="web" value="" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
                 <h2>{{ __('resenas.form_t') }}</h2>
@@ -86,6 +87,15 @@
                 <div class="field"><label for="comentario">{{ __('resenas.comment') }} *</label>
                     <textarea id="comentario" name="comentario" rows="5" required minlength="15" placeholder="{{ __('resenas.comment_ph') }}">{{ old('comentario') }}</textarea>
                     @error('comentario')<small class="error">{{ $message }}</small>@enderror</div>
+                <div class="field">
+                    <label for="fotos">{{ __('resenas.photos') }}</label>
+                    <input id="fotos" type="file" name="fotos[]" accept="image/jpeg,image/png,image/webp" multiple data-max="3" data-max-kb="300">
+                    <small class="hint-s">{{ __('resenas.photos_hint') }}</small>
+                    <div class="op-thumbs" id="fotosPrev" aria-live="polite"></div>
+                    <p class="up-msg" id="fotosMsg" role="status"></p>
+                    @error('fotos')<small class="error">{{ $message }}</small>@enderror
+                    @error('fotos.*')<small class="error">{{ $message }}</small>@enderror
+                </div>
                 <div class="field field-check">
                     <label class="check-line"><input type="checkbox" name="acepta" value="1" required @checked(old('acepta'))>
                         <span>{!! __('resenas.accept', ['link' => '<a href="'.e(route('privacidad')).'" target="_blank" rel="noopener">'.e(__('resenas.privacy')).'</a>']) !!}</span></label>
@@ -95,4 +105,5 @@
         </div>
     </div>
 </section>
+<script src="{{ asset('js/opiniones.js') }}"></script>
 @endsection

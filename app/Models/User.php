@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'activo',
     ];
 
     /**
@@ -42,8 +44,14 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'activo' => 'boolean',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function esAdmin(): bool
+    {
+        return ($this->role ?? 'admin') === 'admin';
     }
 }

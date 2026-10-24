@@ -241,10 +241,28 @@
 
     {{-- ================= PANEL: IDIOMAS ================= --}}
     <section class="tab-pane" id="pane-idiomas" data-pane="idiomas" role="tabpanel" hidden>
-        @foreach(['es' => 'Español', 'en' => 'English'] as $lang => $nombreLang)
+        <div class="card-f" id="autoTrad" data-url="{{ route('admin.tours.traducir') }}">
+            <h3>Traducción automática</h3>
+            <p class="sub">Escribe el tour <b>una sola vez</b> (panel «Tour», «Itinerario» y «Precio») y traduce todo con un clic al portugués, español e inglés: nombre, duración, descripción, incluye / no incluye, pasos del itinerario y precios. Después puedes corregir lo que quieras.</p>
+            <div class="fgrid">
+                <label class="f">¿En qué idioma escribiste el tour?
+                    <select id="trSource"><option value="es">Español</option><option value="pt">Português</option><option value="en">English</option></select>
+                </label>
+                <label class="check-line" style="align-self:end"><input type="checkbox" id="trOver"> <span>Reemplazar traducciones que ya escribí</span></label>
+            </div>
+            <div>
+                <button type="button" class="btn-admin" id="trBtn" @disabled(! \App\Support\Traductor::disponible())>✦ Traducir a los demás idiomas</button>
+                <span class="up-msg" id="trMsg" role="status"></span>
+            </div>
+            @unless(\App\Support\Traductor::disponible())
+                <p class="hint-s">La traducción automática aún no está activada: falta la clave <code>TRADUCTOR_KEY</code> en el archivo <code>.env</code> (pasos en CAMBIOS-TOURS.md). Mientras tanto puedes escribir las traducciones a mano abajo.</p>
+            @endunless
+        </div>
+
+        @foreach(['pt' => 'Português', 'es' => 'Español', 'en' => 'English'] as $lang => $nombreLang)
             <div class="card-f">
                 <h3>{{ $nombreLang }}</h3>
-                @if($loop->first)<p class="sub">Opcional. Si dejas un campo vacío, el sitio muestra el texto del idioma base (panel «Tour»).</p>@endif
+                @if($loop->first)<p class="sub">Opcional. Si dejas un campo vacío, el sitio muestra el texto original del tour. El idioma en que escribiste el tour no necesita traducción.</p>@endif
                 <div class="fgrid">
                     <label class="f">Nombre<input type="text" name="traducciones[{{ $lang }}][nombre]" value="{{ $tr($lang, 'nombre') }}" maxlength="150"></label>
                     <label class="f">Duración<input type="text" name="traducciones[{{ $lang }}][duracion]" value="{{ $tr($lang, 'duracion') }}" maxlength="100"></label>

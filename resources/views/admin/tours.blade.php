@@ -61,10 +61,10 @@
                             @endif
                         </form>
                         <form method="POST" action="{{ route('admin.tours.duplicar', $t->id) }}">@csrf<button class="link-btn" type="submit">Duplicar</button></form>
-                        <form method="POST" action="{{ route('admin.tours.delete', $t->id) }}" onsubmit="return confirm('¿Eliminar el tour «{{ addslashes($t->nombre) }}»? Las reservas asociadas se conservan sin tour.')">
+                        @if(auth()->user()->esAdmin())<form method="POST" action="{{ route('admin.tours.delete', $t->id) }}" onsubmit="return confirm('¿Eliminar el tour «{{ addslashes($t->nombre) }}»? Las reservas asociadas se conservan sin tour.')">
                             @csrf @method('DELETE')
                             <button type="submit" class="link-danger">Eliminar</button>
-                        </form>
+                        </form>@endif
                     </td>
                 </tr>
             @empty

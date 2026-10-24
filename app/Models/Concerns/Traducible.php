@@ -9,7 +9,7 @@ trait Traducible
     public function t(string $campo): ?string
     {
         $locale = app()->getLocale();
-        $valor = $locale === 'pt' ? null : ($this->traducciones[$locale][$campo] ?? null);
+        $valor = $this->traducciones[$locale][$campo] ?? null;
 
         return filled($valor) ? $valor : $this->getAttribute($campo);
     }
@@ -18,7 +18,7 @@ trait Traducible
     public static function limpiarTraducciones($entrada, array $campos): ?array
     {
         $salida = [];
-        foreach (['es', 'en'] as $lang) {
+        foreach (['pt', 'es', 'en'] as $lang) {
             foreach ($campos as $campo) {
                 $v = trim((string) ($entrada[$lang][$campo] ?? ''));
                 if ($v !== '') {

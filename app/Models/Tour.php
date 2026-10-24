@@ -122,7 +122,7 @@ class Tour extends Model
     public function t(string $campo): ?string
     {
         $locale = app()->getLocale();
-        $valor = $locale === 'pt' ? null : ($this->traducciones[$locale][$campo] ?? null);
+        $valor = $this->traducciones[$locale][$campo] ?? null;
 
         return filled($valor) ? $valor : $this->getAttribute($campo);
     }

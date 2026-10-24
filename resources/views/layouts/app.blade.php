@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>@yield('title', 'Mayo Viagens | Cusco, Peru')</title>
     <meta name="description" content="@yield('description', 'Agência local em Cusco com guias em português. Machu Picchu, Vale Sagrado, Montanha 7 Cores e mais.')">
     <link rel="icon" href="{{ asset('favicon.ico') }}">

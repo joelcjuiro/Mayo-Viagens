@@ -26,13 +26,13 @@
                 <details class="trad" style="flex-basis:100%">
                     <summary>Traducciones (opcional)</summary>
                     <div class="fgrid">
-                    @foreach(['es' => 'Español', 'en' => 'English'] as $l => $ln)
+                    @foreach(['pt' => 'Português', 'es' => 'Español', 'en' => 'English'] as $l => $ln)
                         <label class="f">Nombre · {{ $ln }}<input type="text" name="tr[{{ $l }}][nombre]" value="{{ $s->traducciones[$l]['nombre'] ?? '' }}" maxlength="200"></label>
                         <label class="f">Texto corto · {{ $ln }}<input type="text" name="tr[{{ $l }}][descripcion]" value="{{ $s->traducciones[$l]['descripcion'] ?? '' }}" maxlength="200"></label>
                     @endforeach
                     </div>
                 </details>
-                <button class="link-danger" type="submit" form="del-{{ $s->id }}" onclick="return confirm('¿Eliminar la sección «{{ addslashes($s->nombre) }}»? Los tours no se borran.')">Eliminar</button>
+                @if(auth()->user()->esAdmin())<button class="link-danger" type="submit" form="del-{{ $s->id }}" onclick="return confirm('¿Eliminar la sección «{{ addslashes($s->nombre) }}»? Los tours no se borran.')">Eliminar</button>@endif
             </form>
             <form id="del-{{ $s->id }}" method="POST" action="{{ route('admin.secciones.delete', $s->id) }}" hidden>@csrf @method('DELETE')</form>
         @empty

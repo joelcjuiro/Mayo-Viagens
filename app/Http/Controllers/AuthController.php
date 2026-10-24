@@ -19,7 +19,10 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (Auth::attempt($credenciales)) {
+        // Solo pueden entrar las cuentas activas
+        $extra = \Illuminate\Support\Facades\Schema::hasColumn('users', 'activo') ? ['activo' => true] : [];
+
+        if (Auth::attempt($credenciales + $extra)) {
             $request->session()->regenerate();
 
             return redirect()->intended(route('admin.index'));
