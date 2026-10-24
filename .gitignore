@@ -22,5 +22,9 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/public/uploads/*
+!/public/uploads/.gitkeep
+/database/*.sqlite*
+.env.hostinger
 
 /public/img/pag web.mp4

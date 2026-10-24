@@ -57,4 +57,10 @@ class TourController extends Controller
 
         return view('tour-detalle', compact('tour'));
     }
+
+    /** Enlaces antiguos /tour-detalle/{id} → /tour/{slug} */
+    public function enlaceAntiguo(string $slug)
+    {
+        return redirect()->route('tour.detalle', $slug, 301);
+    }
 }

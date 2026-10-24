@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TourAdminController;
 use App\Http\Controllers\SeccionAdminController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ReclamoController;
 use App\Http\Controllers\TraduccionController;
 use App\Http\Controllers\UsuarioAdminController;
@@ -19,22 +20,14 @@ use App\Http\Controllers\ReclamoAdminController;
 use App\Http\Middleware\SetLocale;
 
 // Cambio de idioma (pt, es, en)
-Route::get('/idioma/{lang}', function (string $lang) {
-    if (in_array($lang, SetLocale::SUPPORTED, true)) {
-        session(['locale' => $lang]);
-    }
-
-    $prev = url()->previous();
-
-    return redirect(str_starts_with($prev, url('/')) ? $prev : route('inicio'));
-})->name('idioma');
+Route::get('/idioma/{lang}', [LocaleController::class, 'cambiar'])->name('idioma');
 
 Route::middleware(SetLocale::class)->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('inicio');
 
     Route::get('/tours', [TourController::class, 'index'])->name('tours');
     Route::get('/tour/{slug}', [TourController::class, 'show'])->name('tour.detalle');
-    Route::get('/tour-detalle/{slug}', fn (string $slug) => redirect()->route('tour.detalle', $slug, 301)); // enlaces antiguos
+    Route::get('/tour-detalle/{slug}', [TourController::class, 'enlaceAntiguo']); // enlaces antiguos
 
     Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
     Route::view('/terminos-y-condiciones', 'terminos')->name('terminos');

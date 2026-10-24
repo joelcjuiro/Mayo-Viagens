@@ -1,11 +1,4 @@
-* text=auto eol=lf
-
-*.blade.php diff=html
-*.css diff=css
-*.html diff=html
-*.md diff=markdown
-*.php diff=php
-
-/.github export-ignore
-CHANGELOG.md export-ignore
-.styleci.yml export-ignore
+# Los scripts del servidor (Linux) deben guardarse siempre con saltos de línea LF
+*.sh text eol=lf
+.env.hostinger.example text eol=lf
+.htaccess text eol=lf
