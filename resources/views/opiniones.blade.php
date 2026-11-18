@@ -45,7 +45,7 @@
                                 </header>
                                 @if($r->tour)<p class="op-tour">{{ __('resenas.on_tour') }} <a href="{{ route('tour.detalle', $r->tour->slug) }}">{{ $r->tour->nombre }}</a></p>@endif
                                 <p>{{ $r->comentario }}</p>
-                                @if($r->fotos)<div class="op-photos">@foreach($r->fotosUrls() as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy" decoding="async"></a>@endforeach</div>@endif
+                                @include('partials.fotos', ['galeria' => $r->fotosGaleria(), 'grupo' => 'op'.$r->id])
                                 @if($r->respuesta)<blockquote class="op-reply"><strong>{{ __('resenas.reply') }}</strong><br>{{ $r->respuesta }}</blockquote>@endif
                             </article>
                         @endforeach
@@ -89,7 +89,9 @@
                     @error('comentario')<small class="error">{{ $message }}</small>@enderror</div>
                 <div class="field">
                     <label for="fotos">{{ __('resenas.photos') }}</label>
-                    <input id="fotos" type="file" name="fotos[]" accept="image/jpeg,image/png,image/webp" multiple data-max="3" data-max-kb="300">
+                    <input id="fotos" type="file" name="fotos[]" accept="image/jpeg,image/png,image/webp" multiple data-max="3" data-max-kb="300"
+                        data-msg-working="{{ __('resenas.ph_working') }}" data-msg-max="{{ __('resenas.ph_max') }}" data-msg-type="{{ __('resenas.ph_type') }}"
+                        data-msg-reduced="{{ __('resenas.ph_reduced') }}" data-msg-fail="{{ __('resenas.ph_fail') }}" data-msg-big="{{ __('resenas.photo_big') }}" data-msg-remove="{{ __('resenas.ph_remove') }}">
                     <small class="hint-s">{{ __('resenas.photos_hint') }}</small>
                     <div class="op-thumbs" id="fotosPrev" aria-live="polite"></div>
                     <p class="up-msg" id="fotosMsg" role="status"></p>
@@ -105,5 +107,6 @@
         </div>
     </div>
 </section>
-<script src="{{ asset('js/opiniones.js') }}"></script>
+<script src="{{ \App\Support\Media::v('js/img-compress.js') }}"></script>
+<script src="{{ \App\Support\Media::v('js/opiniones.js') }}"></script>
 @endsection

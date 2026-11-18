@@ -26,7 +26,7 @@
                 </div>
                 @if($r->tour)<small>Tour: {{ $r->tour->nombre }}</small>@endif
                 <p>{{ $r->comentario }}</p>
-                @if($r->fotos)<div class="op-photos">@foreach($r->fotosUrls() as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy"></a>@endforeach</div>@endif
+                @include('partials.fotos', ['galeria' => $r->fotosGaleria(), 'grupo' => 'adm'.$r->id])
                 <label class="f">Respuesta pública de la agencia (opcional)
                     <textarea name="respuesta" rows="2" maxlength="1000">{{ $r->respuesta }}</textarea></label>
                 <div class="op-admin-actions">

@@ -200,6 +200,46 @@
     </article>
 </section>
 
+<section class="grid-2 even">
+    <article class="panel">
+        <header><h2>Blog y comunidad</h2><a href="{{ route('admin.blog') }}">Abrir blog</a></header>
+        @if($blog)
+            @php
+                $bl = [
+                    [$blog['publicados'] > 0, $blog['publicados'].' artículo(s) publicados · '.$blog['borradores'].' borrador(es)'],
+                    [true, number_format($blog['vistas']).' lecturas en total'],
+                    [(bool) $blog['ultimo'], $blog['ultimo'] ? 'Última novedad: '.\Illuminate\Support\Str::limit($blog['ultimo']->titulo, 40).' ('.$blog['ultimo']->publicado_at?->diffForHumans().')' : 'Aún no publicas ninguna novedad'],
+                    [$blog['opPend'] === 0, $blog['opPend'].' opinión(es) por aprobar'.($blog['opFoto'] ? ' · '.$blog['opFoto'].' con foto' : '')],
+                ];
+            @endphp
+            <ul class="checks">
+                @foreach($bl as [$okb, $txt])<li @class(['ok' => $okb])><span class="ck" aria-hidden="true">{{ $okb ? '✓' : '!' }}</span><span>{{ $txt }}</span></li>@endforeach
+            </ul>
+            <p style="margin-top:.8rem"><a class="btn-admin" href="{{ route('admin.blog.create') }}">+ Nueva novedad</a>
+                @if($blog['opPend'])<a class="btn-ghost" href="{{ route('admin.resenas', ['estado' => 'pendiente']) }}" style="margin-left:.4rem">Revisar opiniones</a>@endif</p>
+        @else
+            <p class="empty">Ejecuta <code>php artisan migrate</code> para activar el blog.</p>
+        @endif
+    </article>
+
+    <article class="panel">
+        <header><h2>Google y velocidad</h2><a href="{{ route('admin.monitoreo') }}">Ver monitoreo</a></header>
+        <span class="track big"><i style="width: {{ round($google['listos'] / max(1, $google['total']) * 100) }}%"></i></span>
+        @php
+            $gl = [[$google['listos'] === $google['total'], $google['listos'].' de '.$google['total'].' conexiones con Google listas']];
+            $gl[] = $google['ga']
+                ? [true, number_format($google['ga']['actual']['usuarios']).' visitantes y '.number_format($google['ga']['eventos']['whatsapp_click'] ?? 0).' clics a WhatsApp (últimos '.$google['ga']['dias'].' días)']
+                : [false, 'Visitas: abre Monitoreo para ver los datos de Analytics'];
+            $gl[] = $google['psi']
+                ? [($google['psi']['rendimiento'] ?? 0) >= 90, 'Velocidad en celular: '.$google['psi']['rendimiento'].'/100 (PageSpeed)']
+                : [false, 'Velocidad: aún sin medir con PageSpeed'];
+        @endphp
+        <ul class="checks">
+            @foreach($gl as [$okg, $txt])<li @class(['ok' => $okg])><span class="ck" aria-hidden="true">{{ $okg ? '✓' : '!' }}</span><span>{{ $txt }}</span></li>@endforeach
+        </ul>
+    </article>
+</section>
+
 <article class="panel">
     <header>
         <h2>Últimas reservas</h2>

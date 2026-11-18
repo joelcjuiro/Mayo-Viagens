@@ -8,7 +8,7 @@
 
         {{-- Marca --}}
         <div class="f2-brand">
-            <img class="f2-logo" src="{{ asset('img/logo.jpeg') }}" alt="Mayo Viagens Cusco Peru">
+            <img class="f2-logo" src="{{ \App\Support\Media::img('logo-footer', 'img', ['webp', 'jpeg', 'jpg', 'png']) ?? \App\Support\Media::v('img/logo.jpeg') }}" alt="Mayo Viagens Cusco Peru" loading="lazy" decoding="async">
             <p>{{ __('site.footer.about') }}</p>
             <ul class="f2-checks">
                 @foreach(__('site.footer.checks') as $c)<li>{{ $c }}</li>@endforeach
@@ -51,6 +51,7 @@
                     <li><a href="{{ route('contacto') }}">{{ __('site.footer.contact') }}</a></li>
                     @if(Route::has('terminos'))<li><a href="{{ route('terminos') }}">{{ __('contactpage.terms_link') }}</a></li>@endif
                     @if(Route::has('privacidad'))<li><a href="{{ route('privacidad') }}">{{ __('contactpage.privacy_link') }}</a></li>@endif
+                    @if(Route::has('blog'))<li><a href="{{ route('blog') }}">{{ __('blog.nav') }}</a></li>@endif
                     @if(Route::has('opiniones'))<li><a href="{{ route('opiniones') }}">{{ __('contactpage.reviews_link') }}</a></li>@endif
                     @if(Route::has('reclamaciones'))<li><a href="{{ route('reclamaciones') }}">Libro de Reclamaciones</a></li>@endif
                     @if(Route::has('esnna'))<li><a href="{{ route('esnna') }}">{{ __('contactpage.esnna_link') }}</a></li>@endif
@@ -83,7 +84,7 @@
                 <li>Visa</li><li>Mastercard</li><li>Amex</li><li>PayPal</li>
             </ul>
         </div>
-        <p class="f2-copy">© {{ date('Y') }} Mayo Viagens. {{ __('site.footer.rights') }}</p>
+        <p class="f2-copy">© {{ date('Y') }} Mayo Viagens. {{ __('site.footer.rights') }}<button type="button" class="f2-cookies" data-consent-open hidden>{{ __('cookies.manage') }}</button></p>
     </div>
 
     <div class="textile" aria-hidden="true"></div>

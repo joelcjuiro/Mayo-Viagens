@@ -6,7 +6,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\ArticuloAdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\MonitoreoController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TourAdminController;
 use App\Http\Controllers\SeccionAdminController;
@@ -33,6 +37,8 @@ Route::middleware(SetLocale::class)->group(function () {
     Route::view('/terminos-y-condiciones', 'terminos')->name('terminos');
     Route::view('/politica-de-privacidad', 'privacidad')->name('privacidad');
     Route::view('/codigo-esnna', 'esnna')->name('esnna');
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+    Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
     Route::get('/opiniones', [ResenaController::class, 'index'])->name('opiniones');
     Route::post('/opiniones', [ResenaController::class, 'store'])->middleware('throttle:3,10')->name('opiniones.store');
     Route::get('/libro-de-reclamaciones', [ReclamoController::class, 'create'])->name('reclamaciones');
@@ -44,6 +50,10 @@ Route::middleware(SetLocale::class)->group(function () {
     Route::get('/contacto', [ContactoController::class, 'create'])->name('contacto');
     Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.store');
 });
+
+// Para Google: mapa del sitio y robots.txt dinámicos (usan el dominio real automáticamente)
+Route::get('/sitemap.xml', [SitemapController::class, 'xml'])->name('sitemap');
+Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -66,6 +76,7 @@ Route::middleware(['auth', 'role'])->prefix('admin')->name('admin.')->group(func
         Route::delete('/tours/{id}', [TourAdminController::class, 'destroy'])->name('tours.delete');
         Route::delete('/secciones/{id}', [SeccionAdminController::class, 'destroy'])->name('secciones.delete');
         Route::delete('/resenas/{id}', [ResenaAdminController::class, 'destroy'])->name('resenas.delete');
+        Route::delete('/blog/{id}', [ArticuloAdminController::class, 'destroy'])->name('blog.delete');
     });
 
     // Tours (el orden importa: 'crear' antes de '{id}')
@@ -83,6 +94,18 @@ Route::middleware(['auth', 'role'])->prefix('admin')->name('admin.')->group(func
     Route::get('/secciones', [SeccionAdminController::class, 'index'])->name('secciones');
     Route::post('/secciones', [SeccionAdminController::class, 'store'])->name('secciones.store');
     Route::put('/secciones/{id}', [SeccionAdminController::class, 'update'])->name('secciones.update');
+
+    Route::get('/blog', [ArticuloAdminController::class, 'index'])->name('blog');
+    Route::get('/blog/crear', [ArticuloAdminController::class, 'create'])->name('blog.create');
+    Route::post('/blog', [ArticuloAdminController::class, 'store'])->name('blog.store');
+    Route::get('/blog/{id}/editar', [ArticuloAdminController::class, 'edit'])->name('blog.edit');
+    Route::get('/blog/{id}/vista-previa', [ArticuloAdminController::class, 'preview'])->middleware(SetLocale::class)->name('blog.preview');
+    Route::put('/blog/{id}', [ArticuloAdminController::class, 'update'])->name('blog.update');
+    Route::patch('/blog/{id}/estado', [ArticuloAdminController::class, 'estado'])->name('blog.estado');
+
+    Route::get('/monitoreo', [MonitoreoController::class, 'index'])->name('monitoreo');
+    Route::post('/monitoreo/pagespeed', [MonitoreoController::class, 'pagespeed'])->middleware('throttle:6,10')->name('monitoreo.pagespeed');
+    Route::post('/monitoreo/actualizar', [MonitoreoController::class, 'actualizar'])->name('monitoreo.actualizar');
 
     Route::get('/resenas', [ResenaAdminController::class, 'index'])->name('resenas');
     Route::patch('/resenas/{id}', [ResenaAdminController::class, 'update'])->name('resenas.update');

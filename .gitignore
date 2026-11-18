@@ -27,4 +27,6 @@ Thumbs.db
 /database/*.sqlite*
 .env.hostinger
 
-/public/img/pag web.mp4
+# Credenciales de Google (NUNCA se suben a GitHub)
+/storage/app/google/
+*service-account*.json

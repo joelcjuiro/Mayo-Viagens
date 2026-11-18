@@ -23,14 +23,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Mulish:wght@400;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Mulish:wght@400;600;700;800&display=swap"></noscript>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @php $gAnalytics = trim((string) config('mayo.google.analytics_id')); @endphp
+    @if(filled(config('mayo.google.site_verification')))<meta name="google-site-verification" content="{{ config('mayo.google.site_verification') }}">@endif
+    <link rel="stylesheet" href="{{ \App\Support\Media::v('css/style.css') }}">
     @stack('styles')
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <link rel="stylesheet" href="{{ \App\Support\Media::v('css/theme.css') }}">
+    <link rel="stylesheet" href="{{ \App\Support\Media::v('css/extras.css') }}">
+    @stack('head')
 </head>
 <body>
     @include('partials.header')
     <main>@yield('content')</main>
     @include('partials.footer')
+
+    {{-- Aviso de cookies: solo existe si hay Google Analytics configurado y no es el equipo logueado --}}
+    @if(preg_match('/^G-[A-Z0-9]{4,}$/', $gAnalytics) && ! auth()->check())
+        <script>window.MAYO_GA = @json($gAnalytics);</script>
+        <div class="consent" data-consent role="dialog" aria-label="{{ __('cookies.manage') }}" hidden>
+            <p>{{ __('cookies.text') }} <a href="{{ route('privacidad') }}">{{ __('cookies.more') }}</a></p>
+            <div class="consent-actions">
+                <button type="button" data-consent-reject>{{ __('cookies.reject') }}</button>
+                <button type="button" class="ok" data-consent-accept>{{ __('cookies.accept') }}</button>
+            </div>
+        </div>
+    @endif
 
     @php $whatsFloat = config('services.whatsapp', '51944845870'); @endphp
     <div class="wa-float">
@@ -43,7 +59,8 @@
         </a>
     </div>
 
-    <script src="{{ asset('js/main.js') }}" defer></script>
+    <script src="{{ \App\Support\Media::v('js/main.js') }}" defer></script>
+    <script src="{{ \App\Support\Media::v('js/extras.js') }}" defer></script>
     @stack('scripts')
 </body>
 </html>

@@ -9,13 +9,13 @@
 @php
     $stats = \App\Support\SiteStats::get();
     $whats = config('mayo.whatsapp');
-    $photo = collect(['machupicchu.jpg', 'machupicchu (2).jpg'])->first(fn ($f) => file_exists(public_path('img/tours/'.$f)));
+    // Acepta el nombre original o el que deja `php artisan mayo:imagenes` (sin espacios, .webp)
+    $photoUrl = \App\Support\Media::primero(['machupicchu.jpg', 'machupicchu.webp', 'machupicchu-2.webp', 'machupicchu-2.jpg', 'machupicchu (2).jpg']);
     $icons = [
         '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/>',
         '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
         '<path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5L16 9.5"/>',
     ];
-    $photoUrl = $photo ? asset('img/tours/'.rawurlencode($photo)) : null;
 @endphp
 
 @section('content')

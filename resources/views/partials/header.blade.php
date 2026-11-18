@@ -31,7 +31,7 @@
     <div class="pillbar">
         <a href="{{ route('inicio') }}" class="brand" aria-label="Mayo Viagens">
             @if($logoFile)
-                <img src="{{ asset('img/'.rawurlencode(basename($logoFile))) }}" alt="Mayo Viagens">
+                <img src="{{ \App\Support\Media::v('img/'.basename($logoFile)) }}" alt="Mayo Viagens" decoding="async" fetchpriority="high">
             @else
                 <span class="brand-text">Mayo <b>Viagens</b></span>
             @endif
@@ -73,6 +73,8 @@
                         </div>
                     </div>
                 </li>
+
+                <li><a class="nav-btn {{ request()->routeIs('blog*') ? 'active' : '' }}" href="{{ route('blog') }}">{{ __('header.blog') }}</a></li>
 
                 <li><a class="nav-btn {{ request()->routeIs('contacto') ? 'active' : '' }}" href="{{ route('contacto') }}">{{ __('header.contact') }}</a></li>
             </ul>

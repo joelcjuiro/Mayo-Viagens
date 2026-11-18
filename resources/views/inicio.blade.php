@@ -14,7 +14,7 @@
         $stats['rating_count'] = $opi['count'];
     }
     $featured = $tours->firstWhere('slug', 'machu-picchu') ?? $tours->first();
-    $heroImg = file_exists(public_path('img/hero.jpg')) ? asset('img/hero.jpg') : null;
+    $heroImg = \App\Support\Media::img('hero'); // hero.webp / hero.jpg / hero.jpeg / hero.png
     $heroVideo = collect(['hero-video.mp4', 'pag web.mp4'])->first(fn ($f) => file_exists(public_path('img/'.$f)));
     $slides = collect(glob(public_path('img/tours/*')))
         ->filter(fn ($p) => preg_match('/\.(jpe?g|png|webp)$/i', $p) && str_contains((string) \Illuminate\Support\Str::of(pathinfo($p, PATHINFO_FILENAME))->ascii()->lower()->replaceMatches('/[^a-z0-9]/', ''), 'machupicc'))
@@ -30,12 +30,17 @@
     ];
 @endphp
 
+@if($heroImg)
+    @push('head')<link rel="preload" as="image" href="{{ $heroImg }}" fetchpriority="high">@endpush
+@endif
+
 @section('content')
 {{-- ============ HERO (primer panel) ============ --}}
 <section class="hero2" @if($heroImg) style="--hero-img:url('{{ $heroImg }}')" @endif>
     @if($heroVideo)
         <div class="hero2-media" aria-hidden="true">
-            <video src="{{ asset('img/'.rawurlencode($heroVideo)) }}" @if($heroImg) poster="{{ $heroImg }}" @endif autoplay muted loop playsinline preload="metadata"></video>
+            {{-- El video NO se descarga en el HTML: main.js lo pide solo en pantallas grandes, sin ahorro de datos y cuando la página ya cargó --}}
+            <video data-src="{{ asset('img/'.rawurlencode($heroVideo)) }}" @if($heroImg) poster="{{ $heroImg }}" @endif muted loop playsinline preload="none"></video>
         </div>
     @endif
     <div class="container hero2-grid">
@@ -62,7 +67,7 @@
         @if($featured)
             <a class="hero2-card" href="{{ route('tour.detalle', $featured->slug) }}">
                 <div class="hero2-slides" data-slides>
-                    @foreach($slides as $i => $src)<img src="{{ $src }}" alt="" @class(['on' => $i === 0]) onerror="this.remove()">@endforeach
+                    @foreach($slides as $i => $src)<img src="{{ $src }}" alt="" @class(['on' => $i === 0]) @if($i === 0) fetchpriority="high" @else loading="lazy" @endif decoding="async" onerror="this.remove()">@endforeach
                 </div>
                 <span class="chip chip-badge">{{ __('site.hero.badge') }}</span>
                 <div class="hero2-card-body">
@@ -266,7 +271,7 @@
                     <blockquote class="review">
                         <p class="stars" aria-label="{{ $r['stars'] ?? 5 }} / 5">{{ str_repeat('★', (int) ($r['stars'] ?? 5)) }}</p>
                         <p class="review-text">{{ $r['text'] }}</p>
-                        @if(!empty($r['photos']))<div class="op-photos">@foreach($r['photos'] as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy" decoding="async"></a>@endforeach</div>@endif
+                        @include('partials.fotos', ['galeria' => $r['gallery'] ?? array_map(fn ($u) => ['full' => $u, 'thumb' => $u], $r['photos'] ?? []), 'grupo' => 'home'.$loop->index])
                         <footer>
                             <strong>{{ $r['name'] }}</strong>
                             <small>{{ $r['country'] ?? '' }}@isset($r['date']) · {{ \Illuminate\Support\Carbon::parse($r['date'])->translatedFormat('M Y') }}@endisset</small>

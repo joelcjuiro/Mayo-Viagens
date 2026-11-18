@@ -39,9 +39,7 @@ class ResenaAdminController extends Controller
     {
         $r = Resena::findOrFail($id);
         foreach ((array) $r->fotos as $ruta) {
-            if (str_starts_with((string) $ruta, 'uploads/opiniones/') && ! str_contains($ruta, '..')) {
-                \Illuminate\Support\Facades\File::delete(public_path($ruta));
-            }
+            \App\Support\Imagenes::borrarSubida((string) $ruta);
         }
         $r->delete();
 

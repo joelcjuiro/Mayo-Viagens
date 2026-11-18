@@ -99,16 +99,29 @@ document.addEventListener('click', e => {
   });
 })();
 
-// Video del inicio: se pausa fuera de pantalla y no se carga en móvil/ahorro de datos
+// Video del inicio: no se descarga hasta que la página terminó de cargar, y nunca en móvil,
+// con "ahorro de datos", conexión lenta o si la persona prefiere menos movimiento (queda el póster).
 (function () {
   var v = document.querySelector('.hero2 video');
   if (!v) return;
-  var ahorro = (navigator.connection && navigator.connection.saveData) || window.matchMedia('(max-width: 760px)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (ahorro) { v.removeAttribute('autoplay'); v.pause(); v.removeAttribute('src'); v.load(); return; }
-  if ('IntersectionObserver' in window) {
+  var con = navigator.connection || {};
+  var ahorro = con.saveData || /(^|-)(2g|3g)$/.test(con.effectiveType || '')
+    || window.matchMedia('(max-width: 760px)').matches
+    || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (ahorro || !v.dataset.src) { v.removeAttribute('src'); return; }
+
+  function poner() {
+    if (!v.getAttribute('src')) { v.src = v.dataset.src; v.load(); }
+    v.play().catch(function () {});
+  }
+  function observar() {
+    if (!('IntersectionObserver' in window)) { poner(); return; }
     new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } });
+      es.forEach(function (e) { if (e.isIntersecting) { poner(); } else { v.pause(); } });
     }, { threshold: 0.05 }).observe(v);
   }
+  function libre(fn) { ('requestIdleCallback' in window) ? window.requestIdleCallback(fn, { timeout: 3000 }) : setTimeout(fn, 1500); }
+
+  if (document.readyState === 'complete') { libre(observar); } else { window.addEventListener('load', function () { libre(observar); }); }
   document.addEventListener('visibilitychange', function () { if (document.hidden) { v.pause(); } });
 })();

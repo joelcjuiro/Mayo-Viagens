@@ -32,4 +32,5 @@ return [
     'support' => 'Atendimento',
     'support_v' => '24 horas',
     'soon' => 'Em breve teremos passeios neste destino.',
+    'blog' => 'Blog',
 ];

@@ -10,6 +10,7 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Mulish:wght@400;600;700;800&display=swap"></noscript>
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin-tour.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/extras.css') }}">
     @stack('styles')
 </head>
 <body class="admin">
@@ -26,6 +27,8 @@
             <a href="{{ route('admin.usuarios') }}" @class(['on' => request()->routeIs('admin.usuarios*')])>
                 <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M17 11.5a3 3 0 1 0 0-6M18.5 14.5c2 .6 3 2.3 3 5"/></svg>Usuarios</a>
             @endif
+            <a href="{{ route('admin.blog') }}" @class(['on' => request()->routeIs('admin.blog*')])>
+                <svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg>Blog y novedades</a>
             <a href="{{ route('admin.resenas') }}" @class(['on' => request()->routeIs('admin.resenas*')])>
                 <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3Z"/></svg>Opiniones
                 @php $opPend = rescue(fn () => \App\Models\Resena::where('estado', 'pendiente')->count(), 0, false); @endphp
@@ -36,6 +39,8 @@
                 <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>Reservas</a>
             <a href="{{ route('admin.contactos') }}" @class(['on' => request()->routeIs('admin.contactos*')])>
                 <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/></svg>Mensajes</a>
+            <a href="{{ route('admin.monitoreo') }}" @class(['on' => request()->routeIs('admin.monitoreo*')])>
+                <svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Monitoreo y Google</a>
             <a href="{{ route('inicio') }}" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5H5V6h5"/></svg>Ver sitio</a>
         </nav>
@@ -85,6 +90,7 @@
         setTimeout(function () { items.forEach(show); }, 2500); // respaldo
     })();
     </script>
+    <script src="{{ asset('js/extras.js') }}" defer></script>
     @stack('scripts')
 </body>
 </html>

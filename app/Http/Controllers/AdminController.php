@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Articulo;
 use App\Models\Contacto;
 use App\Models\Reserva;
+use App\Models\Resena;
 use App\Models\Seccion;
 use App\Models\Tour;
+use App\Support\Google;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -113,8 +116,29 @@ class AdminController extends Controller
             ['Redes sociales enlazadas', count(array_filter(config('mayo.social'))) > 0, 'MAYO_INSTAGRAM, MAYO_FACEBOOK…'],
             ['Reservas pendientes atendidas en menos de 24 h', $alertas['pendientes_viejas'] === 0, $alertas['pendientes_viejas'].' esperando más de 24 h'],
             ['Mensajes respondidos en menos de 24 h', $alertas['mensajes_viejos'] === 0, $alertas['mensajes_viejos'].' sin leer hace más de 24 h'],
+            ['Blog con una novedad en los últimos 60 días', rescue(fn () => Articulo::publicados()->where('publicado_at', '>=', now()->subDays(60))->exists(), false, false), 'Publica algo en Blog y novedades (Google premia los sitios que se actualizan)'],
+            ['Google Analytics instalado', Google::analyticsIdValido(), 'GOOGLE_ANALYTICS_ID en .env (ver Monitoreo y Google)'],
+            ['Google Search Console verificado', Google::verificado(), 'GOOGLE_SITE_VERIFICATION en .env (ver Monitoreo y Google)'],
         ];
         $confianzaScore = (int) round(collect($confianza)->where(1, true)->count() / count($confianza) * 100);
+
+        // Blog y opiniones con foto (resumen para el dashboard)
+        $blog = rescue(fn () => [
+            'publicados' => Articulo::publicados()->count(),
+            'borradores' => Articulo::where('estado', '!=', 'publicado')->count(),
+            'vistas' => (int) Articulo::sum('vistas'),
+            'ultimo' => Articulo::publicados()->latest('publicado_at')->first(['titulo', 'publicado_at']),
+            'opPend' => Resena::where('estado', 'pendiente')->count(),
+            'opFoto' => Resena::where('estado', 'pendiente')->whereNotNull('fotos')->count(),
+        ], null, false);
+
+        // Google (solo lo que ya está guardado: el dashboard no llama a Google para no hacerse lento)
+        $google = [
+            'listos' => collect(Google::checklist())->where(2, true)->count(),
+            'total' => count(Google::checklist()),
+            'ga' => Google::reporteEnCache(28),
+            'psi' => Google::pagespeedEnCache('mobile'),
+        ];
 
         // Actividad reciente (reservas + mensajes)
         $actividad = Reserva::with('tour')->latest()->take(6)->get()
@@ -151,6 +175,8 @@ class AdminController extends Controller
             'alertas' => $alertas,
             'confianza' => $confianza,
             'confianzaScore' => $confianzaScore,
+            'blog' => $blog,
+            'google' => $google,
             'actividad' => $actividad,
             'ultimasReservas' => Reserva::with('tour')->latest()->take(5)->get(),
         ]);

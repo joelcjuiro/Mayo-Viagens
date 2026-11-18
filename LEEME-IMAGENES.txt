@@ -1,0 +1,9 @@
+Copia las carpetas "app", "config", "lang", "public" y "resources" encima de tu proyecto (reemplazar).
+
+Incluye:
+- public/img/hero.jpg, og.jpg, logo.png (transparente) y public/favicon.ico (nuevos)
+- public/img/tours/*  y dashboard-hero.jpg: MISMAS fotos con el MISMO nombre, pero optimizadas (de 107 MB a 6 MB)
+- Sello ISO en el inicio (debajo de los botones) y en el pie de página: usa tu archivo public/img/iso.webp
+- Icono de WhatsApp en el pie de página
+
+NO borres tus archivos: esnna.png, iso.webp, pag web.mp4, transporte.jpg (esos los pusiste tú).

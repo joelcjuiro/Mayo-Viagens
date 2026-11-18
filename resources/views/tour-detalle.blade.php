@@ -36,7 +36,7 @@
         <div class="prose">
             @if(count($galeria) > 1)
                 <div class="t-gallery" data-gallery>
-                    <div class="main"><img src="{{ $galeria[0] }}" alt="{{ $nombre }}" data-gallery-main></div>
+                    <div class="main"><img src="{{ $galeria[0] }}" alt="{{ $nombre }}" data-gallery-main fetchpriority="high" decoding="async"></div>
                     <div class="t-thumbs">
                         @foreach($galeria as $i => $g)
                             <button type="button" data-gallery-src="{{ $g }}" aria-label="{{ $nombre }} {{ $i + 1 }}" @if($i === 0) aria-current="true" @endif><img src="{{ $g }}" alt="" loading="lazy"></button>
@@ -121,7 +121,7 @@
                             <div><strong>{{ $o->nombre }}</strong><small>{{ $o->pais }}</small></div>
                             <span class="stars">{{ str_repeat('★', $o->calificacion) }}</span></header>
                         <p>{{ $o->comentario }}</p>
-                        @if($o->fotos)<div class="op-photos">@foreach($o->fotosUrls() as $u)<a href="{{ $u }}" target="_blank" rel="noopener"><img src="{{ $u }}" alt="" loading="lazy" decoding="async"></a>@endforeach</div>@endif
+                        @include('partials.fotos', ['galeria' => $o->fotosGaleria(), 'grupo' => 'tour'.$o->id])
                     </article>
                 @empty
                     <p class="meta">{{ __('resenas.tour_none') }}</p>

@@ -23,6 +23,7 @@ class Opiniones
                 'country' => $r->pais,
                 'date' => $r->created_at->toDateString(),
                 'photos' => $r->fotosUrls(),
+                'gallery' => $r->fotosGaleria(),
             ])->all();
 
             return ['count' => $count, 'avg' => round((float) (clone $base)->avg('calificacion'), 1), 'items' => $items];

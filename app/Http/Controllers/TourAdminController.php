@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Imagenes;
 use App\Models\Seccion;
 use App\Models\Tour;
 use App\Models\TourItinerario;
@@ -532,9 +533,17 @@ class TourAdminController extends Controller
                 return $item;
             }
             File::ensureDirectoryExists(public_path(self::CARPETA));
-            $nombre = Str::random(24).'.'.strtolower($item->guessExtension() ?: $item->getClientOriginalExtension() ?: 'jpg');
-            $item->move(public_path(self::CARPETA), $nombre);
-            $ruta = self::CARPETA.'/'.$nombre;
+
+            // Se reduce y se guarda en WebP (máx. ~1800 px y ~400 KB). Si el archivo no se puede leer
+            // como imagen, se guarda tal cual como antes, para no perder lo que subió el equipo.
+            $g = Imagenes::guardarSubida($item, self::CARPETA, ['lado' => 1800, 'calidad' => 82, 'max_bytes' => 400 * 1024, 'miniatura' => null]);
+            if ($g) {
+                $ruta = $g['ruta'];
+            } else {
+                $nombre = Str::random(24).'.'.strtolower($item->guessExtension() ?: $item->getClientOriginalExtension() ?: 'jpg');
+                $item->move(public_path(self::CARPETA), $nombre);
+                $ruta = self::CARPETA.'/'.$nombre;
+            }
             $archivosNuevos[] = $ruta;
 
             return $ruta;
