@@ -141,6 +141,7 @@ class TourAdminController extends Controller
         $nuevo = ! $tour->exists;
 
         $datos = $request->validate($this->reglas($tour, $request), $this->mensajes());
+        $base = $datos['idioma_base'];   // idioma en el que se escribió el tour: no lleva traducción propia
 
         // --- Imágenes del tour (portada = la primera) -------------------
         $permitidasTour = $tour->exists ? ($tour->imagenes ?: array_values(array_filter([$tour->imagen]))) : [];
@@ -169,7 +170,7 @@ class TourAdminController extends Controller
                 'horario' => $horario !== '' ? $horario : null,
                 'descripcion' => $descripcion !== '' ? $descripcion : null,
                 'imagenes' => array_slice($imgs, 0, self::MAX_IMAGENES_PASO),
-                'traducciones' => TourItinerario::limpiarTraducciones($paso['tr'] ?? [], ['titulo', 'descripcion']),
+                'traducciones' => $this->sinBase(TourItinerario::limpiarTraducciones($paso['tr'] ?? [], ['titulo', 'descripcion']), $base),
             ];
         }
 
@@ -186,7 +187,7 @@ class TourAdminController extends Controller
                 'etiqueta' => $etiqueta !== '' ? $etiqueta : 'Por persona',
                 'precio' => $valor ?? 0,
                 'descripcion' => $desc !== '' ? $desc : null,
-                'traducciones' => TourPrecio::limpiarTraducciones($p['tr'] ?? [], ['etiqueta', 'descripcion']),
+                'traducciones' => $this->sinBase(TourPrecio::limpiarTraducciones($p['tr'] ?? [], ['etiqueta', 'descripcion']), $base),
             ];
         }
 
@@ -214,7 +215,7 @@ class TourAdminController extends Controller
         // --- Guardar todo en una transacción ------------------------------
         $archivosNuevos = [];   // para borrarlos si algo falla
         try {
-            DB::transaction(function () use (&$tour, $request, $datos, $esBorrador, $galeria, $pasosEntrada, $preciosEntrada, &$archivosNuevos, $nuevo) {
+            DB::transaction(function () use (&$tour, $request, $datos, $base, $esBorrador, $galeria, $pasosEntrada, $preciosEntrada, &$archivosNuevos, $nuevo) {
                 // Subir los archivos nuevos y reemplazar los marcadores por su ruta final
                 $galeria = $this->subirMarcadores($galeria, $archivosNuevos);
                 foreach ($pasosEntrada as &$paso) {
@@ -240,6 +241,9 @@ class TourAdminController extends Controller
                     'nombre' => $datos['nombre'],
                     'slug' => $slug,
                     'descripcion' => (string) ($datos['descripcion'] ?? ''),
+                    'encuentro' => filled($datos['encuentro'] ?? null) ? trim($datos['encuentro']) : null,
+                    'info_importante' => filled($datos['info_importante'] ?? null) ? trim($datos['info_importante']) : null,
+                    'idioma_base' => $base,
                     'duracion' => $datos['duracion'] ?? null,
                     'destino' => $datos['destino'] ?? null,
                     'categoria' => $datos['categoria'] ?? null,
@@ -257,7 +261,7 @@ class TourAdminController extends Controller
                     'imagenes' => $galeria ?: null,
                     'imagen' => $galeria[0] ?? null,
                     'precio' => $precioDesde,
-                    'traducciones' => $this->traducciones($request, $tour),
+                    'traducciones' => $this->traducciones($request, $tour, $base),
                     // Borrador = no se ve en el sitio. Publicar = visible.
                     'borrador' => $esBorrador,
                     'activo' => ! $esBorrador,
@@ -426,6 +430,9 @@ class TourAdminController extends Controller
             'tamano_grupo' => ['nullable', 'integer', 'min:1', 'max:500'],
             'badge' => ['nullable', 'string', 'max:50'],
             'descripcion' => ['nullable', 'string'],
+            'encuentro' => ['nullable', 'string', 'max:6000'],
+            'info_importante' => ['nullable', 'string', 'max:10000'],
+            'idioma_base' => ['required', Rule::in(['pt', 'es', 'en'])],
             'video_url' => ['nullable', 'url', 'max:255', function ($attr, $value, $fail) {
                 if ($value && ! preg_match('~(youtu\.be/|youtube(-nocookie)?\.com/)~i', $value)) {
                     $fail('El enlace del video debe ser de YouTube.');
@@ -558,11 +565,11 @@ class TourAdminController extends Controller
     }
 
     /** Traducciones es/en: se actualizan los campos del formulario y se conservan las demás claves. */
-    private function traducciones(Request $request, Tour $tour): ?array
+    private function traducciones(Request $request, Tour $tour, string $base): ?array
     {
         $actual = $tour->traducciones ?: [];
         foreach (['pt', 'es', 'en'] as $lang) {
-            foreach (['nombre', 'descripcion', 'duracion', 'incluye', 'no_incluye'] as $campo) {
+            foreach (['nombre', 'descripcion', 'duracion', 'encuentro', 'info_importante', 'incluye', 'no_incluye'] as $campo) {
                 if ($request->has("traducciones.$lang.$campo")) {
                     $valor = trim((string) $request->input("traducciones.$lang.$campo"));
                     if ($valor === '') {
@@ -573,8 +580,21 @@ class TourAdminController extends Controller
                 }
             }
         }
+        // El idioma en que se escribió el tour es el texto base: no puede tener una "traducción" que lo tape
+        unset($actual[$base]);
 
         return array_filter($actual) ?: null;
+    }
+
+    /** Quita del arreglo de traducciones el idioma base. */
+    private function sinBase(?array $traducciones, string $base): ?array
+    {
+        if (! $traducciones) {
+            return null;
+        }
+        unset($traducciones[$base]);
+
+        return $traducciones ?: null;
     }
 
     private function slugUnico(?string $deseado, string $nombre, Tour $tour): string

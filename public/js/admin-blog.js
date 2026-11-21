@@ -65,20 +65,34 @@
         });
     }
 
-    // ---- Traducción automática PT -> ES/EN (usa el mismo servicio que los tours) ----
+    // ---- Idioma base: solo se piden los idiomas que faltan ----
+    var form = $('artForm');
+    function baseLang() { var r = form.querySelector('[name=idioma_base]:checked'); return r ? r.value : 'es'; }
+    function aplicarBase() {
+        var b = baseLang();
+        form.querySelectorAll('[data-lang-card]').forEach(function (c) {
+            var off = c.dataset.langCard === b;
+            c.classList.toggle('lang-off', off);
+            c.querySelectorAll('input,textarea').forEach(function (i) { i.disabled = off; });
+        });
+    }
+    form.addEventListener('change', function (e) { if (e.target.name === 'idioma_base') { aplicarBase(); } });
+    aplicarBase();
+
+    // ---- Traducción automática (usa el mismo servicio que los tours) ----
     var btn = $('btnTraducir');
     if (btn) {
-        var form = $('artForm'), out = $('trMsg');
+        var out = $('trMsg');
         btn.addEventListener('click', function () {
+            var source = baseLang();
             var base = {
                 titulo: titulo.value, resumen: $('aResumen').value, contenido: area.value,
                 meta_descripcion: (form.querySelector('[name="meta_descripcion"]') || {}).value || '',
                 imagen_alt: (form.querySelector('[name="imagen_alt"]') || {}).value || ''
             };
             var campos = Object.keys(base).filter(function (k) { return base[k].trim() !== ''; });
-            if (!campos.length) { out.textContent = 'Escribe primero el texto en portugués.'; return; }
-            var rellenos = form.querySelectorAll('[data-tr]');
-            var hay = Array.prototype.some.call(rellenos, function (el) { return el.value.trim() !== ''; });
+            if (!campos.length) { out.textContent = 'Escribe primero el texto del artículo.'; return; }
+            var hay = Array.prototype.some.call(form.querySelectorAll('[data-tr]:not(:disabled)'), function (el) { return el.value.trim() !== ''; });
             if (hay && !window.confirm('Ya hay traducciones escritas. ¿Reemplazarlas?')) { return; }
 
             btn.disabled = true; out.textContent = 'Traduciendo…';
@@ -86,12 +100,12 @@
             fetch(form.getAttribute('data-traducir'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': form.querySelector('[name="_token"]').value },
-                body: JSON.stringify({ source: 'pt', items: items })
+                body: JSON.stringify({ source: source, items: items })
             }).then(function (r) { return r.json(); }).then(function (d) {
                 btn.disabled = false;
-                var res = d.ok ? d.traducciones : null;
-                var n = 0;
-                ['es', 'en'].forEach(function (l) {
+                var res = d.ok ? d.traducciones : null, n = 0;
+                ['es', 'pt', 'en'].forEach(function (l) {
+                    if (l === source) { return; }
                     campos.forEach(function (k) {
                         var v = res && res[k] && res[k][l];
                         var el = form.querySelector('[data-tr="' + l + ':' + k + '"]');

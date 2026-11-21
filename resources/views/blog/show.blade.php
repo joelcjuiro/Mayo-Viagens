@@ -68,7 +68,7 @@
         </div>
     </aside>
 
-    <aside class="bl-cta" style="background:#fbefd9;color:var(--ink-900)">
+    <aside class="bl-cta" style="background:#e5f4e0;color:var(--ink-900)">
         <h2 style="color:var(--ink-900)">{{ __('blog.trav_cta_t') }}</h2>
         <p style="color:var(--muted)">{{ __('blog.trav_cta_p') }}</p>
         <div><a class="btn btn-gold" href="{{ route('opiniones') }}#opinar">{{ __('blog.trav_cta') }}</a></div>

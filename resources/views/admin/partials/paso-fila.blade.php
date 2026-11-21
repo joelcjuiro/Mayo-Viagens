@@ -14,20 +14,10 @@
             <input type="text" name="itinerario[{{ $i }}][horario]" value="{{ $p['horario'] ?? '' }}" maxlength="60" placeholder="Ej: 06:00 · Día 2 · Mañana">
         </label>
     </div>
-    <label class="f">Descripción
+    <label class="f">Descripción <small>(puedes usar negritas y listas; las traducciones están en el panel «Idiomas»)</small>
+        @include('admin.partials.md-bar')
         <textarea name="itinerario[{{ $i }}][descripcion]" rows="3" maxlength="5000" placeholder="Qué se hace en este paso">{{ $p['descripcion'] ?? '' }}</textarea>
     </label>
-    <details class="trad">
-        <summary>Traducciones de este paso (opcional)</summary>
-        @foreach(['pt' => 'Português', 'es' => 'Español', 'en' => 'English'] as $l => $ln)
-            <label class="f">Título · {{ $ln }}
-                <input type="text" name="itinerario[{{ $i }}][tr][{{ $l }}][titulo]" value="{{ $p['tr'][$l]['titulo'] ?? '' }}" maxlength="150">
-            </label>
-            <label class="f">Descripción · {{ $ln }}
-                <textarea name="itinerario[{{ $i }}][tr][{{ $l }}][descripcion]" rows="2" maxlength="5000">{{ $p['tr'][$l]['descripcion'] ?? '' }}</textarea>
-            </label>
-        @endforeach
-    </details>
     <div class="f">Imágenes del paso <small>(máx. {{ $maxPaso }}, {{ $maxKb }} KB cada una)</small>
         @include('admin.partials.uploader', [
             'orden' => "itinerario[$i][imagenes_orden][]",

@@ -6,8 +6,9 @@
     <title>@yield('title', 'Mayo Viagens | Cusco, Peru')</title>
     <meta name="description" content="@yield('description', 'Agência local em Cusco com guias em português. Machu Picchu, Vale Sagrado, Montanha 7 Cores e mais.')">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="canonical" href="{{ url()->current() }}">
-    <meta name="theme-color" content="#0b0806">
+    <meta name="theme-color" content="#050c07">
     @if(trim(View::yieldContent('keywords')) !== '')<meta name="keywords" content="@yield('keywords')">@endif
     @php $ogImg = trim(View::yieldContent('og_image')) ?: (glob(public_path('img/og.*')) ? asset('img/'.basename(glob(public_path('img/og.*'))[0])) : null); @endphp
     <meta property="og:type" content="website">

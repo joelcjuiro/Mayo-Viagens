@@ -13,6 +13,7 @@ class Tour extends Model
         'incluye', 'no_incluye', 'activo',
         'destino', 'categoria', 'nivel', 'tamano_grupo', 'badge', 'descuento', 'traducciones',
         'borrador', 'destacado', 'video_url', 'imagenes', 'adicionales', 'meta_descripcion', 'palabras_clave',
+        'encuentro', 'info_importante', 'idioma_base',
     ];
 
     protected function casts(): array
@@ -129,7 +130,7 @@ class Tour extends Model
 
     protected function resumen(): Attribute
     {
-        return Attribute::get(fn () => Str::limit(strip_tags((string) $this->t('descripcion')), 110));
+        return Attribute::get(fn () => Str::limit(\App\Support\Formato::plano($this->t('descripcion')), 110));
     }
 
     protected function precioFinal(): Attribute

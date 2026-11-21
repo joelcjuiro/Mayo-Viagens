@@ -18,7 +18,7 @@ class Articulo extends Model
 
     protected $fillable = [
         'titulo', 'slug', 'categoria', 'resumen', 'contenido', 'imagen', 'imagen_miniatura', 'imagen_alt',
-        'estado', 'publicado_at', 'destacado', 'meta_descripcion', 'traducciones', 'autor_id',
+        'estado', 'publicado_at', 'destacado', 'meta_descripcion', 'traducciones', 'autor_id', 'idioma_base',
     ];
 
     protected function casts(): array

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Iniciar sesión | Mayo Viagens</title>
     <meta name="robots" content="noindex,nofollow">
-    <meta name="theme-color" content="#0b0807">
+    <meta name="theme-color" content="#050d07">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,400&family=Mulish:wght@400;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -32,16 +32,16 @@
                 <div class="cone" aria-hidden="true"></div>
                 <svg class="lamp-svg" viewBox="0 0 200 520" aria-hidden="true">
                     <defs>
-                        <linearGradient id="shadeOff" x1="0" x2="1"><stop offset="0" stop-color="#1b1816"/><stop offset=".5" stop-color="#2b2623"/><stop offset="1" stop-color="#171413"/></linearGradient>
-                        <linearGradient id="shadeOn" x1="0" x2="1"><stop offset="0" stop-color="#e0a45f"/><stop offset=".5" stop-color="#ffd9a0"/><stop offset="1" stop-color="#d9964d"/></linearGradient>
-                        <linearGradient id="pole" x1="0" x2="1"><stop offset="0" stop-color="#15110f"/><stop offset=".5" stop-color="#4a413b"/><stop offset="1" stop-color="#15110f"/></linearGradient>
-                        <radialGradient id="bulb"><stop offset="0" stop-color="#fff6df"/><stop offset="1" stop-color="#ffc678"/></radialGradient>
+                        <linearGradient id="shadeOff" x1="0" x2="1"><stop offset="0" stop-color="#0e2314"/><stop offset=".5" stop-color="#163820"/><stop offset="1" stop-color="#171413"/></linearGradient>
+                        <linearGradient id="shadeOn" x1="0" x2="1"><stop offset="0" stop-color="#2ad641"/><stop offset=".5" stop-color="#4dff65"/><stop offset="1" stop-color="#29c23e"/></linearGradient>
+                        <linearGradient id="pole" x1="0" x2="1"><stop offset="0" stop-color="#0a1a0f"/><stop offset=".5" stop-color="#265f37"/><stop offset="1" stop-color="#0a1a0f"/></linearGradient>
+                        <radialGradient id="bulb"><stop offset="0" stop-color="#ebf7e7"/><stop offset="1" stop-color="#2dff49"/></radialGradient>
                     </defs>
-                    <ellipse cx="100" cy="500" rx="46" ry="9" fill="#000" opacity=".55"/>
-                    <ellipse cx="100" cy="490" rx="40" ry="9" fill="#26201d"/>
-                    <path d="M60 490v-10c0-5 18-9 40-9s40 4 40 9v10c0 5-18 9-40 9s-40-4-40-9z" fill="#1c1715"/>
+                    <ellipse cx="100" cy="500" rx="46" ry="9" fill="#000000" opacity=".55"/>
+                    <ellipse cx="100" cy="490" rx="40" ry="9" fill="#13301c"/>
+                    <path d="M60 490v-10c0-5 18-9 40-9s40 4 40 9v10c0 5-18 9-40 9s-40-4-40-9z" fill="#0e2314"/>
                     <rect x="96.5" y="140" width="7" height="340" fill="url(#pole)"/>
-                    <rect x="94" y="330" width="12" height="10" rx="2" fill="#a37a3c" class="collar"/>
+                    <rect x="94" y="330" width="12" height="10" rx="2" fill="#30823b" class="collar"/>
                     <path d="M62 40h76l32 92H30z" fill="url(#shadeOff)"/>
                     <path class="shade-on" d="M62 40h76l32 92H30z" fill="url(#shadeOn)"/>
                     <ellipse cx="100" cy="132" rx="70" ry="8" class="rim"/>

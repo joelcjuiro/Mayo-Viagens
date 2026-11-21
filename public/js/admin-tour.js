@@ -254,6 +254,8 @@
         add('nombre', val('[name=nombre]'));
         add('duracion', val('[name=duracion]'));
         add('descripcion', val('[name=descripcion]'));
+        add('encuentro', val('[name=encuentro]'));
+        add('info_importante', val('[name=info_importante]'));
         $$('[name="incluye_items[]"]', form).forEach(function (e, i) { add('inc:' + i, e.value); });
         $$('[name="no_incluye_items[]"]', form).forEach(function (e, i) { add('noinc:' + i, e.value); });
         $$('#pane-itinerario .step', form).forEach(function (row) {
@@ -272,9 +274,11 @@
     }
 
     btn.addEventListener('click', function () {
+        if (window.mayoSyncItinerarioTr) { window.mayoSyncItinerarioTr(); }
         var items = reunir();
         if (!items.length) { say('Primero escribe el nombre o la descripción del tour.', true); return; }
-        var source = document.getElementById('trSource').value;
+        var srcRadio = form.querySelector('[name=idioma_base]:checked');
+        var source = srcRadio ? srcRadio.value : 'es';
         var over = document.getElementById('trOver').checked;
         btn.disabled = true; say('Traduciendo ' + items.length + ' textos…');
 
@@ -292,7 +296,7 @@
             }
             ['pt', 'es', 'en'].forEach(function (l) {
                 if (l === source) { return; }
-                ['nombre', 'duracion', 'descripcion'].forEach(function (c) { if (tr[c] && tr[c][l]) { poner('traducciones[' + l + '][' + c + ']', tr[c][l]); } });
+                ['nombre', 'duracion', 'descripcion', 'encuentro', 'info_importante'].forEach(function (c) { if (tr[c] && tr[c][l]) { poner('traducciones[' + l + '][' + c + ']', tr[c][l]); } });
                 ['inc', 'noinc'].forEach(function (p) {
                     var lineas = [], i = 0;
                     while (tr[p + ':' + i]) { lineas.push(tr[p + ':' + i][l] || ''); i++; }

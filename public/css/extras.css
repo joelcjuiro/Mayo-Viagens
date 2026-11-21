@@ -1,17 +1,17 @@
 /* Mayo Viagens · extras globales: lightbox de fotos y aviso de cookies. Se carga después de theme.css */
 
 /* ---------- Lightbox ---------- */
-.lb{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;background:rgba(11,8,6,.92);padding:1rem}
+.lb{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;background:rgba(5,12,7,.92);padding:1rem}
 .lb[hidden]{display:none}
 .lb figure{margin:0;position:relative;max-width:min(1100px,94vw);max-height:88vh;display:grid;place-items:center}
-.lb img{max-width:100%;max-height:88vh;width:auto;height:auto;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.55);background:#1e1711}
-.lb-x,.lb-nav{position:absolute;border:0;border-radius:50%;width:46px;height:46px;background:rgba(255,255,255,.14);color:#fff;font-size:1.7rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .2s}
-.lb-x:hover,.lb-nav:hover{background:var(--gold,#e5972b);color:#1a1208}
+.lb img{max-width:100%;max-height:88vh;width:auto;height:auto;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.55);background:#0d2213}
+.lb-x,.lb-nav{position:absolute;border:0;border-radius:50%;width:46px;height:46px;background:rgba(255,255,255,.14);color:#ffffff;font-size:1.7rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .2s}
+.lb-x:hover,.lb-nav:hover{background:var(--gold,#18c22e);color:#081a0e}
 .lb-x{top:1rem;right:1rem}
 .lb-nav{top:50%;transform:translateY(-50%)}
 .lb-prev{left:1rem}.lb-next{right:1rem}
 .lb-nav[hidden]{display:none}
-.lb-load{position:absolute;width:34px;height:34px;border:3px solid rgba(255,255,255,.25);border-top-color:var(--gold,#e5972b);border-radius:50%;animation:lbspin .8s linear infinite;opacity:0;pointer-events:none}
+.lb-load{position:absolute;width:34px;height:34px;border:3px solid rgba(255,255,255,.25);border-top-color:var(--gold,#18c22e);border-radius:50%;animation:lbspin .8s linear infinite;opacity:0;pointer-events:none}
 .lb.loading .lb-load{opacity:1}
 @keyframes lbspin{to{transform:rotate(360deg)}}
 html.lb-open{overflow:hidden}
@@ -20,17 +20,17 @@ html.lb-open{overflow:hidden}
 
 /* Miniaturas de las opiniones: un poco más grandes y con enfoque visible */
 .op-photos a{display:block;border-radius:10px}
-.op-photos a:focus-visible{outline:2px solid var(--gold,#e5972b);outline-offset:2px}
+.op-photos a:focus-visible{outline:2px solid var(--gold,#18c22e);outline-offset:2px}
 
 /* ---------- Aviso de cookies ---------- */
-.consent{position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);z-index:1500;width:min(760px,calc(100% - 1.6rem));background:var(--ink-900,#14100c);color:#f3ece2;border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.45);padding:1rem 1.2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.consent{position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);z-index:1500;width:min(760px,calc(100% - 1.6rem));background:var(--ink-900,#09170d);color:#e6f3e2;border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.45);padding:1rem 1.2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
 .consent[hidden]{display:none}
-.consent p{margin:0;flex:1 1 320px;font-size:.9rem;line-height:1.55;color:rgba(243,236,226,.9)}
-.consent a{color:var(--acc,#f2aa3d);text-decoration:underline}
+.consent p{margin:0;flex:1 1 320px;font-size:.9rem;line-height:1.55;color:rgba(230,243,226,.9)}
+.consent a{color:var(--acc,#0fe32b);text-decoration:underline}
 .consent-actions{display:flex;gap:.6rem;flex-wrap:wrap}
-.consent button{font:inherit;font-weight:800;font-size:.88rem;border-radius:999px;padding:.6rem 1.15rem;cursor:pointer;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:#fff;min-height:44px}
+.consent button{font:inherit;font-weight:800;font-size:.88rem;border-radius:999px;padding:.6rem 1.15rem;cursor:pointer;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:#ffffff;min-height:44px}
 .consent button:hover{background:rgba(255,255,255,.12)}
-.consent button.ok{background:linear-gradient(180deg,#f5b457,#dd9230);border-color:transparent;color:#1a1208}
+.consent button.ok{background:linear-gradient(180deg,#18f135,#1eb933);border-color:transparent;color:#081a0e}
 .consent button.ok:hover{filter:brightness(1.06)}
 /* sube el botón de WhatsApp para que no choque con el aviso */
 .consent:not([hidden]) ~ .wa-float{bottom:7.5rem}

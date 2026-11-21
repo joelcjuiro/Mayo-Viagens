@@ -2,13 +2,15 @@
 @php $editando = $articulo->exists; @endphp
 @section('title', $editando ? 'Editar artículo' : 'Nuevo artículo')
 @section('heading', $editando ? 'Editar artículo' : 'Nuevo artículo')
-@section('subheading', 'Escribe en portugués (idioma base) y traduce al español e inglés con un clic')
+@section('subheading', 'Escribe en tu idioma y traduce a los demás con un clic')
 @push('styles')<link rel="stylesheet" href="{{ asset('css/admin-blog.css') }}">@endpush
 
 @section('content')
 @php
     $v = fn ($k, $d = null) => old($k, $d);
     $tr = fn ($lang, $campo) => old("tr.$lang.$campo", $articulo->traducciones[$lang][$campo] ?? '');
+    $base = in_array(old('idioma_base', $articulo->idioma_base), ['pt', 'es', 'en'], true) ? old('idioma_base', $articulo->idioma_base) : 'es';
+    $nombresIdioma = ['es' => 'Español', 'pt' => 'Português', 'en' => 'English'];
     $fechaVal = old('publicado_at', $articulo->publicado_at?->format('Y-m-d\TH:i'));
 @endphp
 <form method="POST" enctype="multipart/form-data" id="artForm" class="ab-form"
@@ -25,7 +27,16 @@
     <div class="ab-cols">
         <div class="ab-main">
             <section class="card-f">
-                <h3>Contenido <small>(portugués, idioma base)</small></h3>
+                <h3>¿En qué idioma escribes este artículo?</h3>
+                <div class="lang-pills">
+                    @foreach($nombresIdioma as $cod => $nom)
+                        <label class="lang-pill"><input type="radio" name="idioma_base" value="{{ $cod }}" @checked($base === $cod)><span><b>{{ strtoupper($cod) }}</b> {{ $nom }}</span></label>
+                    @endforeach
+                </div>
+            </section>
+
+            <section class="card-f">
+                <h3>Contenido</h3>
                 <label class="f">Título *
                     <input type="text" name="titulo" id="aTitulo" maxlength="160" required value="{{ $v('titulo', $articulo->titulo) }}" placeholder="Ej: Novas regras de ingresso a Machu Picchu">
                 </label>
@@ -51,17 +62,17 @@
 
             <section class="card-f">
                 <h3>Traducciones</h3>
-                <p class="muted-p">Si dejas un campo vacío, el sitio muestra el texto en portugués.</p>
-                @if($traductor)<button type="button" class="btn-ghost" id="btnTraducir">✨ Traducir automáticamente desde el portugués</button> <small id="trMsg" role="status"></small>
+                <p class="muted-p">Solo se piden los idiomas que faltan. Si dejas un campo vacío, el sitio muestra el texto original.</p>
+                @if($traductor)<button type="button" class="btn-ghost" id="btnTraducir">✨ Traducir automáticamente a los idiomas que faltan</button> <small id="trMsg" role="status"></small>
                 @else<small>La traducción automática no está configurada (clave DeepL). Puedes escribir las traducciones a mano.</small>@endif
-                @foreach(['es' => 'Español', 'en' => 'English'] as $l => $nombre)
-                    <details class="tr-box" {{ $tr($l, 'titulo') !== '' ? 'open' : '' }}>
+                @foreach($nombresIdioma as $l => $nombre)
+                    <details @class(['tr-box', 'lang-off' => $l === $base]) data-lang-card="{{ $l }}" {{ $tr($l, 'titulo') !== '' ? 'open' : '' }}>
                         <summary>{{ $nombre }}</summary>
-                        <label class="f">Título<input type="text" name="tr[{{ $l }}][titulo]" data-tr="{{ $l }}:titulo" maxlength="160" value="{{ $tr($l, 'titulo') }}"></label>
-                        <label class="f">Resumen<textarea name="tr[{{ $l }}][resumen]" data-tr="{{ $l }}:resumen" rows="2" maxlength="320">{{ $tr($l, 'resumen') }}</textarea></label>
-                        <label class="f">Texto<textarea name="tr[{{ $l }}][contenido]" data-tr="{{ $l }}:contenido" rows="10">{{ $tr($l, 'contenido') }}</textarea></label>
-                        <label class="f">Descripción para Google<textarea name="tr[{{ $l }}][meta_descripcion]" data-tr="{{ $l }}:meta_descripcion" rows="2" maxlength="200">{{ $tr($l, 'meta_descripcion') }}</textarea></label>
-                        <label class="f">Texto alternativo de la portada<input type="text" name="tr[{{ $l }}][imagen_alt]" data-tr="{{ $l }}:imagen_alt" maxlength="160" value="{{ $tr($l, 'imagen_alt') }}"></label>
+                        <label class="f">Título<input type="text" name="tr[{{ $l }}][titulo]" data-tr="{{ $l }}:titulo" @disabled($l === $base) maxlength="160" value="{{ $tr($l, 'titulo') }}"></label>
+                        <label class="f">Resumen<textarea name="tr[{{ $l }}][resumen]" data-tr="{{ $l }}:resumen" @disabled($l === $base) rows="2" maxlength="320">{{ $tr($l, 'resumen') }}</textarea></label>
+                        <label class="f">Texto<textarea name="tr[{{ $l }}][contenido]" data-tr="{{ $l }}:contenido" @disabled($l === $base) rows="10">{{ $tr($l, 'contenido') }}</textarea></label>
+                        <label class="f">Descripción para Google<textarea name="tr[{{ $l }}][meta_descripcion]" data-tr="{{ $l }}:meta_descripcion" @disabled($l === $base) rows="2" maxlength="200">{{ $tr($l, 'meta_descripcion') }}</textarea></label>
+                        <label class="f">Texto alternativo de la portada<input type="text" name="tr[{{ $l }}][imagen_alt]" data-tr="{{ $l }}:imagen_alt" @disabled($l === $base) maxlength="160" value="{{ $tr($l, 'imagen_alt') }}"></label>
                     </details>
                 @endforeach
             </section>

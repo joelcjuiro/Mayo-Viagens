@@ -23,7 +23,7 @@
     $bg = optional($todos->first(fn ($t) => $t->imagen_url))->imagen_url;
 
     // Busca el logo en public/img (logo.png, logo.svg, logo.webp...). Si no hay, muestra el nombre en texto.
-    $logoFile = collect(glob(public_path('img/logo*.{svg,png,webp,jpg,jpeg}'), GLOB_BRACE) ?: [])
+    $logoFile = collect(glob(public_path('img/logo*.{svg,webp,png,jpg,jpeg}'), GLOB_BRACE) ?: [])
         ->reject(fn ($p) => str_contains(strtolower(basename($p)), 'footer'))
         ->first();
 @endphp

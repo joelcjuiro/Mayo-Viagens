@@ -43,7 +43,7 @@ class ArticuloAdminController extends Controller
 
     public function create()
     {
-        return view('admin.articulo-form', ['articulo' => new Articulo(['categoria' => 'novedad']), 'traductor' => Traductor::disponible()]);
+        return view('admin.articulo-form', ['articulo' => new Articulo(['categoria' => 'novedad', 'idioma_base' => 'es']), 'traductor' => Traductor::disponible()]);
     }
 
     public function edit(string $id)
@@ -73,6 +73,7 @@ class ArticuloAdminController extends Controller
             'meta_descripcion' => ['nullable', 'string', 'max:200'],
             'publicado_at' => ['nullable', 'date'],
             'portada' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:15360'],
+            'idioma_base' => ['required', 'in:pt,es,en'],
             'tr' => ['nullable', 'array'],
             'tr.*.*' => ['nullable', 'string', 'max:60000'],
             'accion' => ['required', 'in:borrador,publicar'],
@@ -81,6 +82,7 @@ class ArticuloAdminController extends Controller
             'portada.image' => 'La portada debe ser una imagen JPG, PNG o WebP.',
         ]);
 
+        $base = $datos['idioma_base'];
         $slugPedido = Str::slug((string) ($datos['slug'] ?? ''));
         if ($slugPedido !== '') {
             $slug = Articulo::slugUnico($slugPedido, $articulo->id);
@@ -104,11 +106,12 @@ class ArticuloAdminController extends Controller
             'contenido' => $datos['contenido'],
             'imagen_alt' => $datos['imagen_alt'] ?? null,
             'meta_descripcion' => $datos['meta_descripcion'] ?? null,
+            'idioma_base' => $base,
             'estado' => $publicar ? 'publicado' : 'borrador',
             'publicado_at' => $fecha,
             'destacado' => $request->boolean('destacado'),
             'traducciones' => Articulo::limpiarTraducciones(
-                collect($datos['tr'] ?? [])->only(['es', 'en'])->all(),
+                collect($datos['tr'] ?? [])->only(['pt', 'es', 'en'])->except($base)->all(),
                 ['titulo', 'resumen', 'contenido', 'meta_descripcion', 'imagen_alt']
             ),
         ];

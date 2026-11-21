@@ -41,10 +41,10 @@
                     <input id="telefono" name="telefono" value="{{ old('telefono') }}" required autocomplete="tel">
                     @error('telefono')<small class="error">{{ $message }}</small>@enderror</div>
                 <div class="field"><label for="fecha">{{ __('site.book_page.date') }}</label>
-                    <input id="fecha" type="date" name="fecha" value="{{ old('fecha') }}" min="{{ now()->toDateString() }}" required>
+                    <input id="fecha" type="date" name="fecha" value="{{ old('fecha', preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) request('fecha')) ? request('fecha') : '') }}" min="{{ now()->toDateString() }}" required>
                     @error('fecha')<small class="error">{{ $message }}</small>@enderror</div>
                 <div class="field"><label for="personas">{{ __('site.book_page.people') }}</label>
-                    <input id="personas" type="number" name="personas" min="1" max="50" value="{{ old('personas', 2) }}" required>
+                    <input id="personas" type="number" name="personas" min="1" max="50" value="{{ old('personas', min(50, max(1, (int) request('personas', 2)))) }}" required>
                     @error('personas')<small class="error">{{ $message }}</small>@enderror</div>
             </div>
 

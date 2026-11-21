@@ -97,6 +97,9 @@ return [
     ],
     'detail' => [
         'extras' => 'Adicionais',
+        'date' => 'Data', 'travelers' => 'Viajantes', 'traveler_one' => 'viajante', 'traveler_many' => 'viajantes',
+        'total_for' => 'Total para :n', 'rates' => 'Tarifas', 'meeting' => 'Encontro e embarque', 'important' => 'Informações importantes',
+        'wa_details' => ' (:n, data: :date)', 'group_note' => 'Mais de 20 pessoas? Fale com a gente no WhatsApp.',
         'about' => 'Sobre este tour', 'itinerary' => 'Roteiro', 'includes' => 'Inclui', 'excludes' => 'Não inclui',
         'from' => 'A partir de', 'per_person' => 'por pessoa', 'duration' => 'Duração', 'book' => 'Reservar este tour',
         'ask_whatsapp' => 'Perguntar no WhatsApp', 'wa_text' => 'Olá! Quero saber mais sobre: ', 'place' => 'Cusco, Peru',
