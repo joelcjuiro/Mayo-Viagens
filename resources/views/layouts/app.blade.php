@@ -24,8 +24,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Mulish:wght@400;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Mulish:wght@400;600;700;800&display=swap"></noscript>
-    @php $gAnalytics = trim((string) config('mayo.google.analytics_id')); @endphp
-    @if(filled(config('mayo.google.site_verification')))<meta name="google-site-verification" content="{{ config('mayo.google.site_verification') }}">@endif
+    @php $gAnalytics = trim((string) config('google.analytics_id')); @endphp
+    @if(filled(config('google.site_verification')))<meta name="google-site-verification" content="{{ config('google.site_verification') }}">@endif
     <link rel="stylesheet" href="{{ \App\Support\Media::v('css/style.css') }}">
     @stack('styles')
     <link rel="stylesheet" href="{{ \App\Support\Media::v('css/theme.css') }}">

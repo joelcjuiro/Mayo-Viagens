@@ -97,9 +97,6 @@ return [
     ],
     'detail' => [
         'extras' => 'Extras',
-        'date' => 'Date', 'travelers' => 'Travellers', 'traveler_one' => 'traveller', 'traveler_many' => 'travellers',
-        'total_for' => 'Total for :n', 'rates' => 'Rates', 'meeting' => 'Meeting and pick-up', 'important' => 'Important information',
-        'wa_details' => ' (:n, date: :date)', 'group_note' => 'More than 20 people? Message us on WhatsApp.',
         'about' => 'About this tour', 'itinerary' => 'Itinerary', 'includes' => 'Included', 'excludes' => 'Not included',
         'from' => 'From', 'per_person' => 'per person', 'duration' => 'Duration', 'book' => 'Book this tour',
         'ask_whatsapp' => 'Ask on WhatsApp', 'wa_text' => 'Hello! I would like to know more about: ', 'place' => 'Cusco, Peru',

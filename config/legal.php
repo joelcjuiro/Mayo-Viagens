@@ -2,7 +2,7 @@
 
 return [
     'name' => env('LEGAL_NAME', 'Mayo Viagens'),
-    'ruc' => env('LEGAL_RUC') ?: '20616380355',   // RUC de Mayo Viagens (se muestra en el footer, términos y privacidad)
+    'ruc' => env('LEGAL_RUC'),            // si está vacío, no se muestra
     'address' => env('LEGAL_ADDRESS', 'Cusco, Perú'),
     'email' => env('LEGAL_EMAIL'),        // si está vacío, no se muestra
     'city' => 'Cusco',

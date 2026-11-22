@@ -74,7 +74,7 @@
                     </div>
                 </li>
 
-                <li><a class="nav-btn {{ request()->routeIs('blog*') ? 'active' : '' }}" href="{{ route('blog') }}">{{ __('header.blog') }}</a></li>
+                <li><a class="nav-btn {{ request()->routeIs('blog*') ? 'active' : '' }}" href="{{ route('blog') }}">{{ __('blog.nav') }}</a></li>
 
                 <li><a class="nav-btn {{ request()->routeIs('contacto') ? 'active' : '' }}" href="{{ route('contacto') }}">{{ __('header.contact') }}</a></li>
             </ul>

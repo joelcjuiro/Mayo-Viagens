@@ -73,7 +73,6 @@
         form.querySelectorAll('[data-lang-card]').forEach(function (c) {
             var off = c.dataset.langCard === b;
             c.classList.toggle('lang-off', off);
-            c.querySelectorAll('input,textarea').forEach(function (i) { i.disabled = off; });
         });
     }
     form.addEventListener('change', function (e) { if (e.target.name === 'idioma_base') { aplicarBase(); } });
@@ -92,7 +91,7 @@
             };
             var campos = Object.keys(base).filter(function (k) { return base[k].trim() !== ''; });
             if (!campos.length) { out.textContent = 'Escribe primero el texto del artículo.'; return; }
-            var hay = Array.prototype.some.call(form.querySelectorAll('[data-tr]:not(:disabled)'), function (el) { return el.value.trim() !== ''; });
+            var hay = Array.prototype.some.call(form.querySelectorAll('[data-tr]'), function (el) { return el.value.trim() !== ''; });
             if (hay && !window.confirm('Ya hay traducciones escritas. ¿Reemplazarlas?')) { return; }
 
             btn.disabled = true; out.textContent = 'Traduciendo…';

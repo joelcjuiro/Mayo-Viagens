@@ -304,21 +304,21 @@
                 <h3>{{ $nombreLang }} <small class="lang-tag">traducción</small></h3>
                 @if($loop->first)<p class="sub">Opcional. Si dejas un campo vacío, el sitio muestra el texto original del tour. El idioma en que escribiste el tour no aparece aquí porque no necesita traducción.</p>@endif
                 <div class="fgrid">
-                    <label class="f">Nombre<input type="text" name="traducciones[{{ $lang }}][nombre]" value="{{ $tr($lang, 'nombre') }}" maxlength="150" @disabled($lang === $idiomaBase)></label>
-                    <label class="f">Duración<input type="text" name="traducciones[{{ $lang }}][duracion]" value="{{ $tr($lang, 'duracion') }}" maxlength="100" @disabled($lang === $idiomaBase)></label>
+                    <label class="f">Nombre<input type="text" name="traducciones[{{ $lang }}][nombre]" value="{{ $tr($lang, 'nombre') }}" maxlength="150"></label>
+                    <label class="f">Duración<input type="text" name="traducciones[{{ $lang }}][duracion]" value="{{ $tr($lang, 'duracion') }}" maxlength="100"></label>
                 </div>
                 <label class="f">Descripción
                     @include('admin.partials.md-bar')
-                    <textarea name="traducciones[{{ $lang }}][descripcion]" rows="5" @disabled($lang === $idiomaBase)>{{ $tr($lang, 'descripcion') }}</textarea></label>
+                    <textarea name="traducciones[{{ $lang }}][descripcion]" rows="5">{{ $tr($lang, 'descripcion') }}</textarea></label>
                 <label class="f">Encuentro y recogida
                     @include('admin.partials.md-bar')
-                    <textarea name="traducciones[{{ $lang }}][encuentro]" rows="3" @disabled($lang === $idiomaBase)>{{ $tr($lang, 'encuentro') }}</textarea></label>
+                    <textarea name="traducciones[{{ $lang }}][encuentro]" rows="3">{{ $tr($lang, 'encuentro') }}</textarea></label>
                 <label class="f">Información importante
                     @include('admin.partials.md-bar')
-                    <textarea name="traducciones[{{ $lang }}][info_importante]" rows="4" @disabled($lang === $idiomaBase)>{{ $tr($lang, 'info_importante') }}</textarea></label>
+                    <textarea name="traducciones[{{ $lang }}][info_importante]" rows="4">{{ $tr($lang, 'info_importante') }}</textarea></label>
                 <div class="two">
-                    <label class="f">Incluye <small>(una línea por elemento)</small><textarea name="traducciones[{{ $lang }}][incluye]" rows="4" @disabled($lang === $idiomaBase)>{{ $tr($lang, 'incluye') }}</textarea></label>
-                    <label class="f">No incluye <small>(una línea por elemento)</small><textarea name="traducciones[{{ $lang }}][no_incluye]" rows="4" @disabled($lang === $idiomaBase)>{{ $tr($lang, 'no_incluye') }}</textarea></label>
+                    <label class="f">Incluye <small>(una línea por elemento)</small><textarea name="traducciones[{{ $lang }}][incluye]" rows="4">{{ $tr($lang, 'incluye') }}</textarea></label>
+                    <label class="f">No incluye <small>(una línea por elemento)</small><textarea name="traducciones[{{ $lang }}][no_incluye]" rows="4">{{ $tr($lang, 'no_incluye') }}</textarea></label>
                 </div>
 
                 <div class="tr-itin" data-tr-itin="{{ $lang }}">

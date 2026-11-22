@@ -170,7 +170,7 @@ class TourAdminController extends Controller
                 'horario' => $horario !== '' ? $horario : null,
                 'descripcion' => $descripcion !== '' ? $descripcion : null,
                 'imagenes' => array_slice($imgs, 0, self::MAX_IMAGENES_PASO),
-                'traducciones' => $this->sinBase(TourItinerario::limpiarTraducciones($paso['tr'] ?? [], ['titulo', 'descripcion']), $base),
+                'traducciones' => TourItinerario::limpiarTraducciones($paso['tr'] ?? [], ['titulo', 'descripcion']),
             ];
         }
 
@@ -187,7 +187,7 @@ class TourAdminController extends Controller
                 'etiqueta' => $etiqueta !== '' ? $etiqueta : 'Por persona',
                 'precio' => $valor ?? 0,
                 'descripcion' => $desc !== '' ? $desc : null,
-                'traducciones' => $this->sinBase(TourPrecio::limpiarTraducciones($p['tr'] ?? [], ['etiqueta', 'descripcion']), $base),
+                'traducciones' => TourPrecio::limpiarTraducciones($p['tr'] ?? [], ['etiqueta', 'descripcion']),
             ];
         }
 
@@ -580,21 +580,7 @@ class TourAdminController extends Controller
                 }
             }
         }
-        // El idioma en que se escribió el tour es el texto base: no puede tener una "traducción" que lo tape
-        unset($actual[$base]);
-
         return array_filter($actual) ?: null;
-    }
-
-    /** Quita del arreglo de traducciones el idioma base. */
-    private function sinBase(?array $traducciones, string $base): ?array
-    {
-        if (! $traducciones) {
-            return null;
-        }
-        unset($traducciones[$base]);
-
-        return $traducciones ?: null;
     }
 
     private function slugUnico(?string $deseado, string $nombre, Tour $tour): string

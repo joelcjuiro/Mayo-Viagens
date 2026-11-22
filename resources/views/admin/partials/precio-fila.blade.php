@@ -14,10 +14,10 @@
         <div class="fgrid">
         @foreach(['pt' => 'Português', 'es' => 'Español', 'en' => 'English'] as $l => $ln)
             <label @class(['f', 'lang-off' => ($idiomaBase ?? 'es') === $l]) data-lang-field="{{ $l }}">Nombre · {{ $ln }}
-                <input type="text" name="precios[{{ $i }}][tr][{{ $l }}][etiqueta]" value="{{ $p['tr'][$l]['etiqueta'] ?? '' }}" maxlength="120" @disabled(($idiomaBase ?? 'es') === $l)>
+                <input type="text" name="precios[{{ $i }}][tr][{{ $l }}][etiqueta]" value="{{ $p['tr'][$l]['etiqueta'] ?? '' }}" maxlength="120">
             </label>
             <label @class(['f', 'lang-off' => ($idiomaBase ?? 'es') === $l]) data-lang-field="{{ $l }}">Qué incluye · {{ $ln }}
-                <textarea name="precios[{{ $i }}][tr][{{ $l }}][descripcion]" rows="2" maxlength="1000" @disabled(($idiomaBase ?? 'es') === $l)>{{ $p['tr'][$l]['descripcion'] ?? '' }}</textarea>
+                <textarea name="precios[{{ $i }}][tr][{{ $l }}][descripcion]" rows="2" maxlength="1000">{{ $p['tr'][$l]['descripcion'] ?? '' }}</textarea>
             </label>
         @endforeach
         </div>

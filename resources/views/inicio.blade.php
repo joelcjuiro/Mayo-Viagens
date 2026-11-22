@@ -15,7 +15,11 @@
     }
     $featured = $tours->firstWhere('slug', 'machu-picchu') ?? $tours->first();
     $heroImg = \App\Support\Media::img('hero'); // hero.webp / hero.jpg / hero.jpeg / hero.png
-    $heroVideo = collect(['hero-video.mp4', 'pag web.mp4'])->first(fn ($f) => file_exists(public_path('img/'.$f)));
+    // Video de portada: acepta hero-video / hero / «pag web» (mp4 o webm) y, si no, cualquier .mp4/.webm suelto en public/img
+    $heroVideo = collect(['hero-video.mp4', 'hero-video.webm', 'hero.mp4', 'hero.webm', 'pag web.mp4', 'pag-web.mp4'])
+        ->first(fn ($f) => file_exists(public_path('img/'.$f)))
+        ?? collect(glob(public_path('img/*.{mp4,webm,MP4,WEBM}'), GLOB_BRACE) ?: [])->map(fn ($p) => basename($p))->first();
+    $heroVideoTipo = $heroVideo && str_ends_with(strtolower($heroVideo), '.webm') ? 'video/webm' : 'video/mp4';
     $slides = collect(glob(public_path('img/tours/*')))
         ->filter(fn ($p) => preg_match('/\.(jpe?g|png|webp)$/i', $p) && str_contains((string) \Illuminate\Support\Str::of(pathinfo($p, PATHINFO_FILENAME))->ascii()->lower()->replaceMatches('/[^a-z0-9]/', ''), 'machupicc'))
         ->sort()->take(5)
@@ -39,8 +43,7 @@
 <section class="hero2" @if($heroImg) style="--hero-img:url('{{ $heroImg }}')" @endif>
     @if($heroVideo)
         <div class="hero2-media" aria-hidden="true">
-            {{-- El video NO se descarga en el HTML: main.js lo pide solo en pantallas grandes, sin ahorro de datos y cuando la página ya cargó --}}
-            <video data-src="{{ asset('img/'.rawurlencode($heroVideo)) }}" @if($heroImg) poster="{{ $heroImg }}" @endif muted loop playsinline preload="none"></video>
+            <video @if($heroImg) poster="{{ $heroImg }}" @endif autoplay muted loop playsinline preload="auto"><source src="{{ asset('img/'.rawurlencode($heroVideo)) }}" type="{{ $heroVideoTipo }}"></video>
         </div>
     @endif
     <div class="container hero2-grid">

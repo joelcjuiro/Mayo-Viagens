@@ -57,7 +57,6 @@
     function base() { var r = $('[name=idioma_base]:checked', form); return r ? r.value : 'es'; }
     function apagar(caja, off) {
         caja.classList.toggle('lang-off', off);
-        $$('input,textarea', caja).forEach(function (i) { i.disabled = off; });
     }
     function aplicarBase() {
         var b = base();

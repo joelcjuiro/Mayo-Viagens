@@ -68,11 +68,11 @@
                 @foreach($nombresIdioma as $l => $nombre)
                     <details @class(['tr-box', 'lang-off' => $l === $base]) data-lang-card="{{ $l }}" {{ $tr($l, 'titulo') !== '' ? 'open' : '' }}>
                         <summary>{{ $nombre }}</summary>
-                        <label class="f">Título<input type="text" name="tr[{{ $l }}][titulo]" data-tr="{{ $l }}:titulo" @disabled($l === $base) maxlength="160" value="{{ $tr($l, 'titulo') }}"></label>
-                        <label class="f">Resumen<textarea name="tr[{{ $l }}][resumen]" data-tr="{{ $l }}:resumen" @disabled($l === $base) rows="2" maxlength="320">{{ $tr($l, 'resumen') }}</textarea></label>
-                        <label class="f">Texto<textarea name="tr[{{ $l }}][contenido]" data-tr="{{ $l }}:contenido" @disabled($l === $base) rows="10">{{ $tr($l, 'contenido') }}</textarea></label>
-                        <label class="f">Descripción para Google<textarea name="tr[{{ $l }}][meta_descripcion]" data-tr="{{ $l }}:meta_descripcion" @disabled($l === $base) rows="2" maxlength="200">{{ $tr($l, 'meta_descripcion') }}</textarea></label>
-                        <label class="f">Texto alternativo de la portada<input type="text" name="tr[{{ $l }}][imagen_alt]" data-tr="{{ $l }}:imagen_alt" @disabled($l === $base) maxlength="160" value="{{ $tr($l, 'imagen_alt') }}"></label>
+                        <label class="f">Título<input type="text" name="tr[{{ $l }}][titulo]" data-tr="{{ $l }}:titulo" maxlength="160" value="{{ $tr($l, 'titulo') }}"></label>
+                        <label class="f">Resumen<textarea name="tr[{{ $l }}][resumen]" data-tr="{{ $l }}:resumen" rows="2" maxlength="320">{{ $tr($l, 'resumen') }}</textarea></label>
+                        <label class="f">Texto<textarea name="tr[{{ $l }}][contenido]" data-tr="{{ $l }}:contenido" rows="10">{{ $tr($l, 'contenido') }}</textarea></label>
+                        <label class="f">Descripción para Google<textarea name="tr[{{ $l }}][meta_descripcion]" data-tr="{{ $l }}:meta_descripcion" rows="2" maxlength="200">{{ $tr($l, 'meta_descripcion') }}</textarea></label>
+                        <label class="f">Texto alternativo de la portada<input type="text" name="tr[{{ $l }}][imagen_alt]" data-tr="{{ $l }}:imagen_alt" maxlength="160" value="{{ $tr($l, 'imagen_alt') }}"></label>
                     </details>
                 @endforeach
             </section>

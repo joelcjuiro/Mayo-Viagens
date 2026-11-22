@@ -15,7 +15,7 @@ class Google
 {
     public static function analyticsId(): string
     {
-        return trim((string) config('mayo.google.analytics_id'));
+        return trim((string) config('google.analytics_id'));
     }
 
     public static function analyticsIdValido(): bool
@@ -25,18 +25,18 @@ class Google
 
     public static function verificado(): bool
     {
-        return filled(config('mayo.google.site_verification'));
+        return filled(config('google.site_verification'));
     }
 
     public static function propiedad(): string
     {
-        return preg_replace('/\D/', '', (string) config('mayo.google.property_id'));
+        return preg_replace('/\D/', '', (string) config('google.property_id'));
     }
 
     /** Datos de la cuenta de servicio (JSON de Google Cloud) guardado en storage/app/google/. */
     public static function credenciales(): ?array
     {
-        $ruta = storage_path('app/'.ltrim((string) config('mayo.google.service_account'), '/'));
+        $ruta = storage_path('app/'.ltrim((string) config('google.service_account'), '/'));
         if (! is_file($ruta)) {
             return null;
         }
@@ -218,8 +218,8 @@ class Google
         try {
             $q = http_build_query(['url' => $url, 'strategy' => $estrategia, 'locale' => 'es'])
                 .'&category=performance&category=seo&category=accessibility&category=best-practices';
-            if (filled(config('mayo.google.pagespeed_key'))) {
-                $q .= '&key='.urlencode((string) config('mayo.google.pagespeed_key'));
+            if (filled(config('google.pagespeed_key'))) {
+                $q .= '&key='.urlencode((string) config('google.pagespeed_key'));
             }
             $r = Http::acceptJson()->timeout(80)->get('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?'.$q);
             if ($r->failed()) {

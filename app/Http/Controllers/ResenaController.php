@@ -58,8 +58,8 @@ class ResenaController extends Controller
             'acepta' => ['accepted'],
         ], [
             'fotos.max' => 'Puedes subir hasta 3 fotos.',
-            'fotos.*.max' => __('resenas.photo_big'),
-            'fotos.*.uploaded' => __('resenas.photo_big'),
+            'fotos.*.max' => __('resenas_fotos.big'),
+            'fotos.*.uploaded' => __('resenas_fotos.big'),
             'fotos.*.image' => 'Los archivos deben ser imágenes (JPG, PNG o WebP).',
             'fotos.*.mimes' => 'Las fotos deben ser JPG, PNG o WebP.',
         ]);
@@ -82,7 +82,7 @@ class ResenaController extends Controller
         if ($fallo) {
             array_map([Imagenes::class, 'borrarSubida'], $rutas);
 
-            return back()->withInput()->withErrors(['fotos' => __('resenas.photo_bad')]);
+            return back()->withInput()->withErrors(['fotos' => __('resenas_fotos.bad')]);
         }
 
         Resena::create($datos + ['fotos' => $rutas ?: null, 'estado' => 'pendiente', 'ip' => $request->ip()]);

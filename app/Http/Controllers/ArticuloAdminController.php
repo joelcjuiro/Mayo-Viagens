@@ -111,7 +111,7 @@ class ArticuloAdminController extends Controller
             'publicado_at' => $fecha,
             'destacado' => $request->boolean('destacado'),
             'traducciones' => Articulo::limpiarTraducciones(
-                collect($datos['tr'] ?? [])->only(['pt', 'es', 'en'])->except($base)->all(),
+                collect($datos['tr'] ?? [])->only(['pt', 'es', 'en'])->all(),
                 ['titulo', 'resumen', 'contenido', 'meta_descripcion', 'imagen_alt']
             ),
         ];

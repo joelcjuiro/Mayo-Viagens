@@ -90,9 +90,9 @@
                 <div class="field">
                     <label for="fotos">{{ __('resenas.photos') }}</label>
                     <input id="fotos" type="file" name="fotos[]" accept="image/jpeg,image/png,image/webp" multiple data-max="3" data-max-kb="300"
-                        data-msg-working="{{ __('resenas.ph_working') }}" data-msg-max="{{ __('resenas.ph_max') }}" data-msg-type="{{ __('resenas.ph_type') }}"
-                        data-msg-reduced="{{ __('resenas.ph_reduced') }}" data-msg-fail="{{ __('resenas.ph_fail') }}" data-msg-big="{{ __('resenas.photo_big') }}" data-msg-remove="{{ __('resenas.ph_remove') }}">
-                    <small class="hint-s">{{ __('resenas.photos_hint') }}</small>
+                        data-msg-working="{{ __('resenas_fotos.working') }}" data-msg-max="{{ __('resenas_fotos.max') }}" data-msg-type="{{ __('resenas_fotos.type') }}"
+                        data-msg-reduced="{{ __('resenas_fotos.reduced') }}" data-msg-fail="{{ __('resenas_fotos.fail') }}" data-msg-big="{{ __('resenas_fotos.big') }}" data-msg-remove="{{ __('resenas_fotos.remove') }}">
+                    <small class="hint-s">{{ __('resenas_fotos.hint') }}</small>
                     <div class="op-thumbs" id="fotosPrev" aria-live="polite"></div>
                     <p class="up-msg" id="fotosMsg" role="status"></p>
                     @error('fotos')<small class="error">{{ $message }}</small>@enderror

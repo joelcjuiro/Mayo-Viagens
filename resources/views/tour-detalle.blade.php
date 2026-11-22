@@ -98,14 +98,14 @@
 
             @if(filled($tour->t('encuentro')))
                 <div class="detail-block tour-note meet">
-                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{ __('site.detail.meeting') }}</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>{{ __('tourx.meeting') }}</h3>
                     <div class="rich">{!! $fmt($tour->t('encuentro')) !!}</div>
                 </div>
             @endif
 
             @if(filled($tour->t('info_importante')))
                 <div class="detail-block tour-note imp">
-                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>{{ __('site.detail.important') }}</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>{{ __('tourx.important') }}</h3>
                     <div class="rich">{!! $fmt($tour->t('info_importante')) !!}</div>
                 </div>
             @endif
@@ -146,16 +146,16 @@
             @if($unit)
                 @php $u = $final($unit); @endphp
                 <div class="bk" data-booking data-unit="{{ $u }}" data-orig="{{ $dto > 0 ? $unit : '' }}" data-max="20"
-                     data-one="{{ __('site.detail.traveler_one') }}" data-many="{{ __('site.detail.traveler_many') }}" data-total="{{ __('site.detail.total_for') }}"
-                     data-wa="{{ __('site.detail.wa_details') }}" data-book="{{ route('reservas', ['tour' => $tour->id]) }}">
+                     data-one="{{ __('tourx.traveler_one') }}" data-many="{{ __('tourx.traveler_many') }}" data-total="{{ __('tourx.total_for') }}"
+                     data-wa="{{ __('tourx.wa_details') }}" data-book="{{ route('reservas', ['tour' => $tour->id]) }}">
                     <p class="bk-from"><span>{{ __('site.detail.from') }}</span>
                         @if($dto > 0)<s class="price-old">US$ {{ number_format($unit, 0) }}</s>@endif
                         <b>US$ {{ number_format($u, 0) }}</b> <span>{{ __('site.detail.per_person') }}</span></p>
                     <div class="bk-fields">
-                        <label class="bk-field"><span>{{ __('site.detail.date') }}</span>
+                        <label class="bk-field"><span>{{ __('tourx.date') }}</span>
                             <input type="date" data-bk-date value="{{ now()->addDays(7)->toDateString() }}" min="{{ now()->addDay()->toDateString() }}" required>
                             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></label>
-                        <div class="bk-field"><span>{{ __('site.detail.travelers') }}</span>
+                        <div class="bk-field"><span>{{ __('tourx.travelers') }}</span>
                             <div class="bk-step">
                                 <button type="button" data-bk-minus aria-label="−">−</button>
                                 <output data-bk-count aria-live="polite">2</output>
@@ -168,7 +168,7 @@
                         <span class="bk-calc" data-bk-calc></span>
                     </div>
                     <a href="{{ route('reservas', ['tour' => $tour->id]) }}" class="btn btn-gold btn-block" data-bk-link>{{ __('site.detail.book') }}</a>
-                    <small class="bk-note" data-bk-note hidden>{{ __('site.detail.group_note') }}</small>
+                    <small class="bk-note" data-bk-note hidden>{{ __('tourx.group_note') }}</small>
                 </div>
             @elseif($desde)
                 <p class="price"><small>{{ __('site.detail.from') }}</small>
@@ -176,7 +176,7 @@
                     US$ {{ number_format($final($desde), 0) }} <small>{{ __('site.detail.per_person') }}</small></p>
             @endif
             @if($precios->count() > 1)
-                <p class="bk-rates">{{ __('site.detail.rates') }}</p>
+                <p class="bk-rates">{{ __('tourx.rates') }}</p>
                 <div class="t-prices">
                     @foreach($precios as $pr)
                         <div class="t-price"><div>{{ $pr->t('etiqueta') }}@if($pr->t('descripcion'))<small>{{ $pr->t('descripcion') }}</small>@endif</div><b>US$ {{ number_format($final($pr->precio), 0) }}</b></div>

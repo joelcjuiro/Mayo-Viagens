@@ -32,20 +32,6 @@ return [
     // Viajeros atendidos. Si es null, se calcula con las reservas confirmadas del panel.
     'travelers' => env('MAYO_TRAVELERS'),
 
-    // Google: monitoreo y búsqueda. Todo es opcional; el panel (Monitoreo) te dice qué falta.
-    'google' => [
-        // ID de medición de Google Analytics 4 (empieza con G-). Solo se carga si el visitante acepta las cookies.
-        'analytics_id' => env('GOOGLE_ANALYTICS_ID'),
-        // Código de verificación de Google Search Console (solo el valor de content="...").
-        'site_verification' => env('GOOGLE_SITE_VERIFICATION'),
-        // Para ver las visitas dentro del panel: ID NUMÉRICO de la propiedad GA4 y una cuenta de servicio
-        // (archivo JSON dentro de storage/app/google/). Guía en GOOGLE-MONITOREO.md
-        'property_id' => env('GOOGLE_ANALYTICS_PROPERTY_ID'),
-        'service_account' => env('GOOGLE_SERVICE_ACCOUNT', 'google/service-account.json'),
-        // Clave gratuita de PageSpeed Insights (opcional; sin clave funciona con menos cuota).
-        'pagespeed_key' => env('GOOGLE_PAGESPEED_KEY'),
-    ],
-
     // Reseñas reales de clientes (con su permiso). Ejemplo de formato:
     // ['name' => 'Ana P.', 'country' => 'Brasil', 'date' => '2026-08-14', 'stars' => 5,
     //  'text' => 'Texto de la reseña…', 'url' => 'https://enlace-a-la-reseña-original']
